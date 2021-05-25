@@ -29,7 +29,7 @@ const EventForm: React.FC<EventFormProp> = ({
 
 	const handleFormSubmit = () => {
 		selectedEvent
-			? updateEvent({ ...selectedEvent, ...values }) // updated values + other part from selectedEvent
+			? updateEvent({ ...selectedEvent, ...values }) // only changes the props matches values
 			: createEvent({
 					...values,
 					id: cuid(),
