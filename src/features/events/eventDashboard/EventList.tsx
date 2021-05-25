@@ -4,17 +4,23 @@ import { Event } from "../../../app/model/interfaces";
 
 interface EventListProps {
 	events: Event[];
-	handleFormVisible: () => void;
+	setFormVisible: (value: boolean) => void;
+	setSelectedEvent: (event: Event) => void;
 }
 
-const EventList: React.FC<EventListProps> = ({ events, handleFormVisible }) => {
+const EventList: React.FC<EventListProps> = ({
+	events,
+	setFormVisible,
+	setSelectedEvent,
+}) => {
 	return (
 		<>
 			{events.map((event) => (
 				<EventListItem
 					key={event.id}
 					event={event}
-					handleFormVisible={handleFormVisible}
+					setFormVisible={setFormVisible}
+					setSelectedEvent={setSelectedEvent}
 				/>
 			))}
 		</>

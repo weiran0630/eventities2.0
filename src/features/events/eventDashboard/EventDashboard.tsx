@@ -8,22 +8,50 @@ import { sampleData } from "../../../app/API/sampleData";
 
 interface EventDashboardProps {
 	formVisible: boolean;
-	handleFormVisible: () => void;
+	selectedEvent: Event | undefined;
+	setFormVisible: (value: boolean) => void;
+	setSelectedEvent: (event: Event | undefined) => void;
 }
 
 const EventDashboard: React.FC<EventDashboardProps> = ({
 	formVisible,
-	handleFormVisible,
+	selectedEvent,
+	setFormVisible,
+	setSelectedEvent,
 }) => {
 	const [events, setEvents] = useState<Event[]>(sampleData);
+
+	const handleCreateEvent = (event: Event) => {
+		setEvents([...events, event]);
+	};
+	const handleUpdateEvent = (updatedEvent: Event) => {
+		setEvents(
+			events.map((event) =>
+				event.id === updatedEvent.id ? updatedEvent : event
+			)
+		);
+		setSelectedEvent(undefined);
+	};
 
 	return (
 		<Grid>
 			<Grid.Column width={10}>
-				<EventList events={events} handleFormVisible={handleFormVisible} />
+				<EventList
+					events={events}
+					setFormVisible={setFormVisible}
+					setSelectedEvent={setSelectedEvent}
+				/>
 			</Grid.Column>
 			<Grid.Column width={6}>
-				{formVisible && <EventForm handleFormVisible={handleFormVisible} />}
+				{formVisible && (
+					<EventForm
+						key={selectedEvent ? selectedEvent.id : null}
+						setFormVisible={setFormVisible}
+						createEvent={handleCreateEvent}
+						selectedEvent={selectedEvent}
+						updateEvent={handleUpdateEvent}
+					/>
+				)}
 			</Grid.Column>
 		</Grid>
 	);

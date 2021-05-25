@@ -5,12 +5,13 @@ import EventListAttendee from "./EventListAttendee";
 
 interface EventListItemProps {
 	event: Event;
-	handleFormVisible: () => void;
+	setFormVisible: (value: boolean) => void;
+	setSelectedEvent: (event: Event) => void;
 }
 
 const EventListItem: React.FC<EventListItemProps> = ({
 	event,
-	handleFormVisible,
+	setSelectedEvent,
 }) => {
 	const { title, date, description, venue, hostedBy, hostPhotoURL, attendees } =
 		event;
@@ -48,7 +49,9 @@ const EventListItem: React.FC<EventListItemProps> = ({
 					floated="right"
 					content="檢視"
 					style={{ marginTop: "0.5em", marginLeft: "0.5em" }}
-					onClick={handleFormVisible}
+					onClick={() => {
+						setSelectedEvent(event);
+					}}
 				/>
 			</Segment>
 		</Segment.Group>

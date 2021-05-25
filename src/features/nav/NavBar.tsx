@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Container, Menu } from "semantic-ui-react";
 
 interface NavBarProps {
-	handleFormVisible: () => void;
+	handleFormVisible: (value: boolean) => void;
 }
 
 const NavBar: React.FC<NavBarProps> = ({ handleFormVisible }) => {
@@ -23,7 +23,7 @@ const NavBar: React.FC<NavBarProps> = ({ handleFormVisible }) => {
 						positive
 						inverted
 						content="新增活動"
-						onClick={handleFormVisible}
+						onClick={() => handleFormVisible(true)}
 					/>
 				</Menu.Item>
 				<Menu.Item position="right">
