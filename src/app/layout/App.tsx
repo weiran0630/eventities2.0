@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import { Container } from "semantic-ui-react";
+import EventDashboard from "../../features/events/eventDashboard/EventDashboard";
+import NavBar from "../../features/nav/NavBar";
 
 const App: React.FC = () => {
+	const [formVisible, setFormVisible] = useState(false);
+
+	const handleFormVisible = () => {
+		setFormVisible(!formVisible);
+	};
+
 	return (
-		<div className="App">
-			<h1>哈哈屁眼</h1>
-		</div>
+		<>
+			<NavBar handleFormVisible={handleFormVisible} />
+			<Container className="main">
+				<EventDashboard
+					handleFormVisible={handleFormVisible}
+					formVisible={formVisible}
+				/>
+			</Container>
+		</>
 	);
 };
 
