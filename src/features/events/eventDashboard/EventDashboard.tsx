@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Grid } from "semantic-ui-react";
-import EventForm from "../eventForm/EventForm";
 import EventList from "./EventList";
 import { Event } from "../../../app/model/interfaces";
 /** seeded data */
@@ -13,25 +12,20 @@ interface EventDashboardProps {
 	setSelectedEvent: (event: Event | undefined) => void;
 }
 
-const EventDashboard: React.FC<EventDashboardProps> = ({
-	formVisible,
-	selectedEvent,
-	setFormVisible,
-	setSelectedEvent,
-}) => {
+const EventDashboard: React.FC<EventDashboardProps> = () => {
 	const [events, setEvents] = useState<Event[]>(sampleData);
 
-	const handleCreateEvent = (event: Event) => {
-		setEvents([...events, event]);
-	};
-	const handleUpdateEvent = (updatedEvent: Event) => {
-		setEvents(
-			events.map((event) =>
-				event.id === updatedEvent.id ? updatedEvent : event
-			)
-		);
-		setSelectedEvent(undefined);
-	};
+	// const handleCreateEvent = (event: Event) => {
+	// 	setEvents([...events, event]);
+	// };
+	// const handleUpdateEvent = (updatedEvent: Event) => {
+	// 	setEvents(
+	// 		events.map((event) =>
+	// 			event.id === updatedEvent.id ? updatedEvent : event
+	// 		)
+	// 	);
+	// 	setSelectedEvent(undefined);
+	// };
 
 	const handleDeleteEvent = (id: string) => {
 		setEvents(events.filter((event) => event.id !== id));
@@ -40,23 +34,11 @@ const EventDashboard: React.FC<EventDashboardProps> = ({
 	return (
 		<Grid>
 			<Grid.Column width={10}>
-				<EventList
-					events={events}
-					setFormVisible={setFormVisible}
-					setSelectedEvent={setSelectedEvent}
-					deleteEvent={handleDeleteEvent}
-				/>
+				<EventList events={events} deleteEvent={handleDeleteEvent} />
 			</Grid.Column>
+
 			<Grid.Column width={6}>
-				{formVisible && (
-					<EventForm
-						key={selectedEvent ? selectedEvent.id : null}
-						setFormVisible={setFormVisible}
-						createEvent={handleCreateEvent}
-						selectedEvent={selectedEvent}
-						updateEvent={handleUpdateEvent}
-					/>
-				)}
+				<h2>Filters</h2>
 			</Grid.Column>
 		</Grid>
 	);

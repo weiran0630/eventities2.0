@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import { NavLink, useHistory } from "react-router-dom";
 import { Button, Container, Menu } from "semantic-ui-react";
+import SignedInMenu from "./SignedInMenu";
+import SignedOutMenu from "./SignedOutMenu";
 
-interface NavBarProps {
-	handleFormVisible: (value: boolean) => void;
-}
+const NavBar: React.FC = () => {
+	const history = useHistory(); // access history object without wrapper in Route component
+	const [authenticated, setAuthenticated] = useState(false);
 
-const NavBar: React.FC<NavBarProps> = ({ handleFormVisible }) => {
+	const handleSignOut = () => {
+		setAuthenticated(false);
+		history.push("/");
+	};
+
 	return (
 		<Menu inverted fixed="top">
 			<Container>
-				<Menu.Item header>
+				<Menu.Item as={NavLink} exact to="/" header>
 					<img
 						src="/assets/logo.png"
 						alt="logo"
@@ -17,24 +24,19 @@ const NavBar: React.FC<NavBarProps> = ({ handleFormVisible }) => {
 					/>
 					Eventities
 				</Menu.Item>
-				<Menu.Item name="所有活動" />
-				<Menu.Item>
-					<Button
-						positive
-						inverted
-						content="新增活動"
-						onClick={() => handleFormVisible(true)}
-					/>
-				</Menu.Item>
-				<Menu.Item position="right">
-					<Button basic inverted content="登錄" />
-					<Button
-						basic
-						inverted
-						content="註冊"
-						style={{ marginLeft: "0.5em" }}
-					/>
-				</Menu.Item>
+
+				<Menu.Item as={NavLink} to="/events" name="所有活動" />
+				{authenticated && (
+					<Menu.Item as={NavLink} to="/create">
+						<Button positive inverted content="新增活動" />
+					</Menu.Item>
+				)}
+
+				{authenticated ? (
+					<SignedInMenu signOut={handleSignOut} />
+				) : (
+					<SignedOutMenu setAuthenticated={setAuthenticated} />
+				)}
 			</Container>
 		</Menu>
 	);

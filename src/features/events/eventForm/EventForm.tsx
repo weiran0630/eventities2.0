@@ -1,5 +1,6 @@
 import cuid from "cuid";
 import React, { ChangeEvent, useState } from "react";
+import { Link } from "react-router-dom";
 import { Button, Form, Header, Segment } from "semantic-ui-react";
 import { Event } from "../../../app/model/interfaces";
 
@@ -93,7 +94,8 @@ const EventForm: React.FC<EventFormProp> = ({
 				/>
 				<Button type="submit" floated="right" positive content="提交" />
 				<Button
-					onClick={() => setFormVisible(false)}
+					as={Link}
+					to="/events"
 					type="submit"
 					floated="right"
 					content="取消"
