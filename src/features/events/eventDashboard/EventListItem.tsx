@@ -2,29 +2,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Segment, Item, Icon, List, Button } from "semantic-ui-react";
 import { Event } from "../../../app/model/interfaces";
+import { useTypedDispatch } from "../../../app/store/hooks";
+import { deleteEvent } from "../../../app/store/slice/eventSlice";
 import EventListAttendee from "./EventListAttendee";
 
 interface EventListItemProps {
 	event: Event;
-	deleteEvent: (id: string) => void;
 }
 
-const EventListItem: React.FC<EventListItemProps> = ({
-	event,
-	deleteEvent,
-}) => {
-	const { title, date, description, venue, hostedBy, hostPhotoURL, attendees } =
-		event;
+const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
+	const dispatch = useTypedDispatch();
 
 	return (
 		<Segment.Group>
 			<Segment>
 				<Item.Group>
 					<Item>
-						<Item.Image size="tiny" circular src={hostPhotoURL} />
+						<Item.Image size="tiny" circular src={event.hostPhotoURL} />
 						<Item.Content>
-							<Item.Header content={title} />
-							<Item.Description>{`舉辦人：${hostedBy}`}</Item.Description>
+							<Item.Header content={event.title} />
+							<Item.Description>{`舉辦人：${event.hostedBy}`}</Item.Description>
 						</Item.Content>
 					</Item>
 				</Item.Group>
@@ -32,26 +29,26 @@ const EventListItem: React.FC<EventListItemProps> = ({
 
 			<Segment>
 				<span>
-					<Icon name="clock" color="teal" /> {date}
+					<Icon name="clock" color="teal" /> {event.date}
 					<Icon
 						name="marker"
 						color="teal"
 						style={{ marginLeft: "0.5em" }}
 					/>{" "}
-					{venue}
+					{event.venue}
 				</span>
 			</Segment>
 
 			<Segment secondary>
 				<List horizontal>
-					{attendees.map((attendee) => (
+					{event.attendees.map((attendee) => (
 						<EventListAttendee key={attendee.id} attendee={attendee} />
 					))}
 				</List>
 			</Segment>
 
 			<Segment clearing>
-				<div>{description}</div>
+				<div>{event.description}</div>
 				<Button
 					as={Link}
 					to={`/events/${event.id}`}
@@ -62,7 +59,7 @@ const EventListItem: React.FC<EventListItemProps> = ({
 				/>
 				<Button
 					onClick={() => {
-						deleteEvent(event.id);
+						dispatch(deleteEvent(event.id));
 					}}
 					basic
 					color="red"

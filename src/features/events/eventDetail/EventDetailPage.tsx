@@ -1,20 +1,32 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
+import { useTypedSelector } from "../../../app/store/hooks";
 import EventChatRoom from "./EventChatRoom";
 import EventDetailHeader from "./EventDetailHeader";
 import EventDetailInfo from "./EventDetailInfo";
 import EventDetailSidebar from "./EventDetailSidebar";
 
-const EventDetailPage: React.FC = () => {
+interface ParamTypes {
+	id: string;
+}
+
+const EventDetailPage: React.FC<ParamTypes> = () => {
+	const { id } = useParams<ParamTypes>();
+	const selectedEvent = useTypedSelector(({ event }) =>
+		event.events.find((e) => e.id === id)
+	);
+
 	return (
 		<Grid>
 			<Grid.Column width={10}>
-				<EventDetailHeader />
-				<EventDetailInfo />
+				<EventDetailHeader event={selectedEvent!} />
+				<EventDetailInfo event={selectedEvent!} />
 				<EventChatRoom />
 			</Grid.Column>
+
 			<Grid.Column width={6}>
-				<EventDetailSidebar />
+				<EventDetailSidebar attendees={selectedEvent!.attendees} />
 			</Grid.Column>
 		</Grid>
 	);

@@ -19,7 +19,7 @@ const App: React.FC = () => {
 						<Container className="main">
 							<Route exact path="/events" component={EventDashboard} />
 							<Route path="/events/:id" component={EventDetailPage} />
-							<Route path={["/create", "/manage"]} component={EventForm} />
+							<Route path={["/create", "/manage/:id"]} component={EventForm} />
 						</Container>
 					</>
 				)}

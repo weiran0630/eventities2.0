@@ -4,18 +4,13 @@ import { Event } from "../../../app/model/interfaces";
 
 interface EventListProps {
 	events: Event[];
-	deleteEvent: (id: string) => void;
 }
 
-const EventList: React.FC<EventListProps> = ({
-	events,
-
-	deleteEvent,
-}) => {
+const EventList: React.FC<EventListProps> = ({ events }) => {
 	return (
 		<>
 			{events.map((event) => (
-				<EventListItem key={event.id} event={event} deleteEvent={deleteEvent} />
+				<EventListItem key={event.id} event={event} />
 			))}
 		</>
 	);

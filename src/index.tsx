@@ -4,14 +4,20 @@ import "./app/layout/styles.scss";
 import App from "./app/layout/App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./app/store";
+import ScrollToTop from "./app/layout/ScrollToTop";
 
 const rootElement = document.querySelector("#root");
 
 const render = () => {
 	ReactDOM.render(
-		<BrowserRouter>
-			<App />
-		</BrowserRouter>,
+		<Provider store={store}>
+			<BrowserRouter>
+				<ScrollToTop />
+				<App />
+			</BrowserRouter>
+		</Provider>,
 		rootElement
 	);
 };

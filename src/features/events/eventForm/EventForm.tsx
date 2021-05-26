@@ -1,23 +1,23 @@
 import cuid from "cuid";
 import React, { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { Button, Form, Header, Segment } from "semantic-ui-react";
-import { Event } from "../../../app/model/interfaces";
-
-interface EventFormProp {
-	selectedEvent: Event | undefined;
-	createEvent: (event: Event) => void;
-	updateEvent: (event: Event) => void;
-	setFormVisible: (value: boolean) => void;
+import { useTypedDispatch, useTypedSelector } from "../../../app/store/hooks";
+import { createEvent, updateEvent } from "../../../app/store/slice/eventSlice";
+interface ParamTypes {
+	id: string;
 }
 
-const EventForm: React.FC<EventFormProp> = ({
-	selectedEvent,
-	createEvent,
-	updateEvent,
-	setFormVisible,
-}) => {
-	const initialValue = selectedEvent ?? {
+const EventForm: React.FC = () => {
+	const { id } = useParams<ParamTypes>();
+	const history = useHistory();
+
+	const selectedEvent = useTypedSelector(({ event }) =>
+		event.events.find((e) => e.id === id)
+	);
+	const dispatch = useTypedDispatch();
+
+	const initialValues = selectedEvent ?? {
 		title: "",
 		category: "",
 		date: "",
@@ -25,20 +25,21 @@ const EventForm: React.FC<EventFormProp> = ({
 		city: "",
 		venue: "",
 	};
-
-	const [values, setValues] = useState(initialValue);
+	const [values, setValues] = useState(initialValues);
 
 	const handleFormSubmit = () => {
 		selectedEvent
-			? updateEvent({ ...selectedEvent, ...values }) // only changes the props matches values
-			: createEvent({
-					...values,
-					id: cuid(),
-					hostedBy: "Bob",
-					hostPhotoURL: "/assets/user.png",
-					attendees: [],
-			  });
-		setFormVisible(false);
+			? dispatch(updateEvent({ ...selectedEvent, ...values })) // only changes the props matches values
+			: dispatch(
+					createEvent({
+						...values,
+						id: cuid(),
+						hostedBy: "Bob",
+						hostPhotoURL: "/assets/user.png",
+						attendees: [],
+					})
+			  );
+		history.push(`/events`);
 	};
 
 	const handleInputChanges = (event: ChangeEvent<HTMLInputElement>) => {
