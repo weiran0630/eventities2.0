@@ -6,12 +6,14 @@ interface EventListProps {
 	events: Event[];
 	setFormVisible: (value: boolean) => void;
 	setSelectedEvent: (event: Event) => void;
+	deleteEvent: (id: string) => void;
 }
 
 const EventList: React.FC<EventListProps> = ({
 	events,
 	setFormVisible,
 	setSelectedEvent,
+	deleteEvent,
 }) => {
 	return (
 		<>
@@ -19,8 +21,8 @@ const EventList: React.FC<EventListProps> = ({
 				<EventListItem
 					key={event.id}
 					event={event}
-					setFormVisible={setFormVisible}
 					setSelectedEvent={setSelectedEvent}
+					deleteEvent={deleteEvent}
 				/>
 			))}
 		</>

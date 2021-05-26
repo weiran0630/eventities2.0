@@ -5,13 +5,14 @@ import EventListAttendee from "./EventListAttendee";
 
 interface EventListItemProps {
 	event: Event;
-	setFormVisible: (value: boolean) => void;
 	setSelectedEvent: (event: Event) => void;
+	deleteEvent: (id: string) => void;
 }
 
 const EventListItem: React.FC<EventListItemProps> = ({
 	event,
 	setSelectedEvent,
+	deleteEvent,
 }) => {
 	const { title, date, description, venue, hostedBy, hostPhotoURL, attendees } =
 		event;
@@ -32,7 +33,12 @@ const EventListItem: React.FC<EventListItemProps> = ({
 			<Segment>
 				<span>
 					<Icon name="clock" color="teal" /> {date}
-					<Icon name="marker" color="teal" /> {venue}
+					<Icon
+						name="marker"
+						color="teal"
+						style={{ marginLeft: "0.5em" }}
+					/>{" "}
+					{venue}
 				</span>
 			</Segment>
 			<Segment secondary>
@@ -44,13 +50,24 @@ const EventListItem: React.FC<EventListItemProps> = ({
 			</Segment>
 			<Segment clearing>
 				<div>{description}</div>
+
 				<Button
 					color="teal"
 					floated="right"
 					content="檢視"
-					style={{ marginTop: "0.5em", marginLeft: "0.5em" }}
+					style={{ marginTop: "1em", marginLeft: "0.5em" }}
 					onClick={() => {
 						setSelectedEvent(event);
+					}}
+				/>
+				<Button
+					basic
+					color="red"
+					floated="right"
+					content="刪除"
+					style={{ marginTop: "1em", marginLeft: "0.5em" }}
+					onClick={() => {
+						deleteEvent(event.id);
 					}}
 				/>
 			</Segment>

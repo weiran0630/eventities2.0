@@ -33,6 +33,10 @@ const EventDashboard: React.FC<EventDashboardProps> = ({
 		setSelectedEvent(undefined);
 	};
 
+	const handleDeleteEvent = (id: string) => {
+		setEvents(events.filter((event) => event.id !== id));
+	};
+
 	return (
 		<Grid>
 			<Grid.Column width={10}>
@@ -40,6 +44,7 @@ const EventDashboard: React.FC<EventDashboardProps> = ({
 					events={events}
 					setFormVisible={setFormVisible}
 					setSelectedEvent={setSelectedEvent}
+					deleteEvent={handleDeleteEvent}
 				/>
 			</Grid.Column>
 			<Grid.Column width={6}>
