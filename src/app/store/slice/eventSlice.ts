@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 import { sampleData } from "../../API/sampleData";
-import { Event } from "../../model/interfaces";
+import { Event } from "../../common/model/interfaces";
 
 const initialState = {
 	events: sampleData,
@@ -14,17 +15,17 @@ const eventSlice = createSlice({
 			state.events.push(action.payload);
 		},
 		updateEvent(state, action: PayloadAction<Event>) {
-			const filtered = state.events.filter(
-				(event) => event.id !== action.payload.id
-			);
-			filtered.push(action.payload);
-			state.events = filtered;
+			const updatedEvents = [
+				...state.events.filter((event) => event.id !== action.payload.id),
+				action.payload,
+			];
+			state.events = updatedEvents;
 		},
 		deleteEvent(state, action: PayloadAction<string>) {
-			const filtered = state.events.filter(
+			const filteredEvent = state.events.filter(
 				(event) => event.id !== action.payload
 			);
-			state.events = filtered;
+			state.events = filteredEvent;
 		},
 	},
 });

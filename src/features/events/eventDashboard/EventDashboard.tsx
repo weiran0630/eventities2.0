@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid } from "semantic-ui-react";
+
 import EventList from "./EventList";
 import { useTypedSelector } from "../../../app/store/hooks";
 

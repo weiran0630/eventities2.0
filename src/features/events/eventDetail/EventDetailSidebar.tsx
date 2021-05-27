@@ -1,6 +1,7 @@
 import React from "react";
 import { Item, Segment } from "semantic-ui-react";
-import { Attendee } from "../../../app/model/interfaces";
+
+import { Attendee } from "../../../app/common/model/interfaces";
 
 interface EventDetailSidebarProps {
 	attendees: Attendee[];

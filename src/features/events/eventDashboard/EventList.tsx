@@ -1,6 +1,7 @@
 import React from "react";
+
 import EventListItem from "./EventListItem";
-import { Event } from "../../../app/model/interfaces";
+import { Event } from "../../../app/common/model/interfaces";
 
 interface EventListProps {
 	events: Event[];

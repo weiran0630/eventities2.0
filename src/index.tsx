@@ -1,10 +1,11 @@
 import ReactDOM from "react-dom";
 import "semantic-ui-css/semantic.min.css";
-import "./app/layout/styles.scss";
-import App from "./app/layout/App";
-import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
+import reportWebVitals from "./reportWebVitals";
+
+import "./app/layout/styles.scss";
+import App from "./app/layout/App";
 import store from "./app/store";
 import ScrollToTop from "./app/layout/ScrollToTop";
 
