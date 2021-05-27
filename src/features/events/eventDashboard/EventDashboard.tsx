@@ -5,7 +5,7 @@ import EventList from "./EventList";
 import { useTypedSelector } from "../../../app/store/hooks";
 
 const EventDashboard: React.FC = () => {
-	const events = useTypedSelector(({ event }) => event.events);
+	const events = useTypedSelector((state) => state.event.events);
 
 	return (
 		<Grid>

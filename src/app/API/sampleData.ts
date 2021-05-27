@@ -1,8 +1,17 @@
+export const dateToString = (date: Date) =>
+	date.toLocaleTimeString([], {
+		year: "numeric",
+		month: "numeric",
+		day: "numeric",
+		hour: "2-digit",
+		minute: "2-digit",
+	});
+
 export const sampleData = [
 	{
 		id: "1",
 		title: "Trip to Empire State building",
-		date: new Date("2018-03-21"),
+		date: dateToString(new Date("2018-03-21")),
 		category: "culture",
 		description:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",
@@ -26,7 +35,7 @@ export const sampleData = [
 	{
 		id: "2",
 		title: "Trip to Punch and Judy Pub",
-		date: new Date("2018-03-18"),
+		date: dateToString(new Date("2018-03-18")),
 		category: "drinks",
 		description:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",

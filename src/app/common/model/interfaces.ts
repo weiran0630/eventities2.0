@@ -7,7 +7,7 @@ export interface Attendee {
 export interface Event {
 	id: string;
 	title: string;
-	date: Date;
+	date: string;
 	category: string;
 	description: string;
 	city: string;

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Segment, Item, Icon, List, Button } from "semantic-ui-react";
-import { format } from "date-fns";
 
 import { Event } from "../../../app/common/model/interfaces";
 import { useTypedDispatch } from "../../../app/store/hooks";
@@ -31,8 +30,7 @@ const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
 
 			<Segment>
 				<span>
-					<Icon name="clock" color="teal" />{" "}
-					{format(event.date, "MMMM d yyyy h:mm a")}
+					<Icon name="clock" color="teal" /> {event.date}
 					<Icon
 						name="marker"
 						color="teal"

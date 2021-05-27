@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
 import { sampleData } from "../../API/sampleData";
 import { Event } from "../../common/model/interfaces";
 

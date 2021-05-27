@@ -12,6 +12,7 @@ import { categoryOptions } from "../../../app/common/model/categoryOptions";
 import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";
 import MyDateInput from "../../../app/common/form/MyDateInput";
+import { dateToString } from "../../../app/API/sampleData";
 
 interface ParamTypes {
 	id: string;
@@ -29,7 +30,7 @@ const EventForm: React.FC = () => {
 	const initialValues = selectedEvent ?? {
 		title: "",
 		category: "",
-		date: new Date(),
+		date: new Date().toString(),
 		description: "",
 		city: "",
 		venue: "",
@@ -59,7 +60,7 @@ const EventForm: React.FC = () => {
 									hostedBy: "Bob",
 									hostPhotoURL: "/assets/user.png",
 									attendees: [],
-									date: new Date(),
+									date: dateToString(new Date()),
 								})
 						  );
 					history.push(`/events`);
