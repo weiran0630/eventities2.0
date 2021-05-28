@@ -14,6 +14,7 @@ interface ParamTypes {
 
 const EventDetailPage: React.FC = () => {
 	const { id } = useParams<ParamTypes>();
+
 	const selectedEvent = useTypedSelector(({ event }) =>
 		event.events.find((e) => e.id === id)
 	);

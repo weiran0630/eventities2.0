@@ -7,12 +7,13 @@ import { Button, Header, Segment } from "semantic-ui-react";
 
 import { useTypedDispatch, useTypedSelector } from "../../../app/store/hooks";
 import { createEvent, updateEvent } from "../../../app/store/slice/eventSlice";
-import MySelectInput from "../../../app/common/form/MySelectInput";
+import { dateToString } from "../../../app/API/sampleData";
 import { categoryOptions } from "../../../app/common/model/categoryOptions";
+import MySelectInput from "../../../app/common/form/MySelectInput";
 import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";
 import MyDateInput from "../../../app/common/form/MyDateInput";
-import { dateToString } from "../../../app/API/sampleData";
+import MyPlacesInput from "../../../app/common/form/MyPlacesInput";
 
 interface ParamTypes {
 	id: string;
@@ -30,10 +31,22 @@ const EventForm: React.FC = () => {
 	const initialValues = selectedEvent ?? {
 		title: "",
 		category: "",
-		date: new Date().toString(),
+		date: dateToString(new Date()),
 		description: "",
-		city: "",
-		venue: "",
+		city: {
+			address: "",
+			latLng: {
+				lat: null as unknown as number,
+				lng: null as unknown as number,
+			},
+		},
+		venue: {
+			address: "",
+			latLng: {
+				lat: null as unknown as number,
+				lng: null as unknown as number,
+			},
+		},
 	};
 
 	const validationSchema = Yup.object({
@@ -41,8 +54,12 @@ const EventForm: React.FC = () => {
 		category: Yup.string().required("請選擇活動種類"),
 		description: Yup.string().required("活動描述爲必填，請確認輸入"),
 		date: Yup.string().required("請輸入活動日期"),
-		city: Yup.string().required("請輸入城市欄位"),
-		venue: Yup.string().required("請輸入場地欄位"),
+		city: Yup.object().shape({
+			address: Yup.string().required("請輸入城市欄位"),
+		}),
+		venue: Yup.object().shape({
+			address: Yup.string().required("請輸入場地地址欄位"),
+		}),
 	});
 
 	return (
@@ -66,7 +83,7 @@ const EventForm: React.FC = () => {
 					history.push(`/events`);
 				}}
 			>
-				{({ isSubmitting, dirty, isValid }) => (
+				{({ isSubmitting, dirty, isValid, values }) => (
 					<Form className="ui form">
 						<Header
 							sub
@@ -105,9 +122,19 @@ const EventForm: React.FC = () => {
 							style={{ marginBottom: "1em" }}
 						/>
 
-						<MyTextInput label="縣市" name="city" placeholder="縣市" />
+						<MyPlacesInput label="縣市" name="city" placeholder="縣市" />
 
-						<MyTextInput label="場地" name="venue" placeholder="場地" />
+						<MyPlacesInput
+							disabled={!values.city.latLng}
+							label="場地地址"
+							name="venue"
+							placeholder="場地"
+							options={{
+								location: new google.maps.LatLng(values.city.latLng),
+								radius: 1000,
+								types: ["establishment"],
+							}}
+						/>
 
 						<Button
 							loading={isSubmitting}

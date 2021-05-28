@@ -18,6 +18,7 @@ const validationSchema = Yup.object({
 
 const LoginForm: React.FC = () => {
 	const dispatch = useTypedDispatch();
+
 	return (
 		<ModalWrapper size="mini" header="登入Eventities">
 			<Formik

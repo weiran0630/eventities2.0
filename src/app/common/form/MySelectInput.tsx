@@ -7,6 +7,7 @@ type MySelectInputProps = { label: string } & FieldHookConfig<string> &
 
 const MySelectInput: React.FC<MySelectInputProps> = ({ label, ...props }) => {
 	const [field, meta, helpers] = useField(props);
+
 	return (
 		<FormField error={meta.touched && !!meta.error}>
 			<Select

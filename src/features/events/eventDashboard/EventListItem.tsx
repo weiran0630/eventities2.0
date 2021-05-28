@@ -36,7 +36,7 @@ const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
 						color="teal"
 						style={{ marginLeft: "0.5em" }}
 					/>{" "}
-					{event.venue}
+					{event.venue.address}
 				</span>
 			</Segment>
 

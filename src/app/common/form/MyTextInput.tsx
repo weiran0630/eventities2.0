@@ -6,6 +6,7 @@ type MyTextInputProps = { label: string } & FieldHookConfig<string>;
 
 const MyTextInput: React.FC<MyTextInputProps> = ({ label, ...props }) => {
 	const [field, meta] = useField(props);
+
 	return (
 		<FormField error={meta.touched && !!meta.error}>
 			<input {...field} placeholder={props.placeholder} type={props.type} />

@@ -3,14 +3,15 @@ import { Button } from "semantic-ui-react";
 import { increment, decrement } from "../../app/store/slice/sandboxSlice";
 import { openModal } from "../../app/store/slice/modalSlice";
 import { useTypedDispatch, useTypedSelector } from "../../app/store/hooks";
+import TestPlacesInput from "./TestPlacesInput";
 
 const Sandbox: React.FC = () => {
-	const dispatch = useTypedDispatch();
 	const count = useTypedSelector((state) => state.sandbox.count);
+	const dispatch = useTypedDispatch();
 
 	return (
 		<>
-			<h1>Testing 123</h1>
+			<h1>Testing 123123</h1>
 			<h3>The data is: {count}</h3>
 			<Button
 				onClick={() => dispatch(increment())}
@@ -29,6 +30,9 @@ const Sandbox: React.FC = () => {
 				content="Open Modal"
 				color="teal"
 			/>
+			<div style={{ marginTop: "15px" }}>
+				<TestPlacesInput></TestPlacesInput>
+			</div>
 		</>
 	);
 };

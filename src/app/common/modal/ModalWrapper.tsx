@@ -1,5 +1,6 @@
 import React, { ReactNode, useEffect } from "react";
 import { Modal } from "semantic-ui-react";
+
 import { useTypedDispatch } from "../../store/hooks";
 import { closeModal } from "../../store/slice/modalSlice";
 

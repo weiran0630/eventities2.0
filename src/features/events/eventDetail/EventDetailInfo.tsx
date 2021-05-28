@@ -27,7 +27,7 @@ const EventDetailInfo: React.FC<EventDetailInfoProps> = ({ event }) => {
 			<Segment attached clearing>
 				<Icon name="marker" color="teal" style={iconStyle} />
 				<span style={{ display: "inline-block", marginBottom: "0.5em" }}>
-					{event.venue}
+					{event.venue.address}
 				</span>
 				<Button floated="right" color="teal" size="tiny" content="地圖" />
 			</Segment>
