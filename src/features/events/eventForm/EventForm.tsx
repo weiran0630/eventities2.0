@@ -74,6 +74,7 @@ const EventForm: React.FC = () => {
 							color="teal"
 							style={{ marginBottom: "1em" }}
 						/>
+
 						<MyTextInput label="標題" name="title" placeholder="標題" />
 
 						<MyDateInput
@@ -86,7 +87,7 @@ const EventForm: React.FC = () => {
 							onChange={() => {
 								return;
 							}}
-						></MyDateInput>
+						/>
 
 						<MySelectInput
 							label="種類"
@@ -103,6 +104,7 @@ const EventForm: React.FC = () => {
 							color="teal"
 							style={{ marginBottom: "1em" }}
 						/>
+
 						<MyTextInput label="縣市" name="city" placeholder="縣市" />
 
 						<MyTextInput label="場地" name="venue" placeholder="場地" />
@@ -115,6 +117,7 @@ const EventForm: React.FC = () => {
 							positive
 							content="提交"
 						/>
+
 						<Button
 							disabled={isSubmitting}
 							as={Link}

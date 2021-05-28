@@ -1,17 +1,12 @@
-import React, { useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import { Button, Container, Menu } from "semantic-ui-react";
+import { useTypedSelector } from "../../app/store/hooks";
 import SignedInMenu from "./SignedInMenu";
 import SignedOutMenu from "./SignedOutMenu";
 
 const NavBar: React.FC = () => {
-	const history = useHistory(); // access history object without wrapper in Route component
-	const [authenticated, setAuthenticated] = useState(false);
-
-	const handleSignOut = () => {
-		setAuthenticated(false);
-		history.push("/");
-	};
+	const authenticated = useTypedSelector((state) => state.auth.authenticated);
 
 	return (
 		<Menu inverted fixed="top">
@@ -35,11 +30,7 @@ const NavBar: React.FC = () => {
 					</Menu.Item>
 				)}
 
-				{authenticated ? (
-					<SignedInMenu signOut={handleSignOut} />
-				) : (
-					<SignedOutMenu setAuthenticated={setAuthenticated} />
-				)}
+				{authenticated ? <SignedInMenu /> : <SignedOutMenu />}
 			</Container>
 		</Menu>
 	);

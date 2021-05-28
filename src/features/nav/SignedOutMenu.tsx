@@ -1,15 +1,15 @@
 import React from "react";
 import { Button, Menu } from "semantic-ui-react";
 
-interface SignedOutMenuProps {
-	setAuthenticated: (value: boolean) => void;
-}
+import { useTypedDispatch } from "../../app/store/hooks";
+import { openModal } from "../../app/store/slice/modalSlice";
 
-const SignedOutMenu: React.FC<SignedOutMenuProps> = ({ setAuthenticated }) => {
+const SignedOutMenu: React.FC = () => {
+	const dispatch = useTypedDispatch();
 	return (
 		<Menu.Item position="right">
 			<Button
-				onClick={() => setAuthenticated(true)}
+				onClick={() => dispatch(openModal({ modalType: "LoginForm" }))}
 				basic
 				inverted
 				content="登錄"
