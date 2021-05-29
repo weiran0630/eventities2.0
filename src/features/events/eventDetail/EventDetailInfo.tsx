@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Icon, Segment } from "semantic-ui-react";
 
 import { Event } from "../../../app/common/model/interfaces";
+import EventMap from "./EventMap";
 
 const iconStyle = {
 	margin: "0.3em 0.5em 0.3em 0.3em",
@@ -12,6 +13,8 @@ interface EventDetailInfoProps {
 }
 
 const EventDetailInfo: React.FC<EventDetailInfoProps> = ({ event }) => {
+	const [mapVisible, setMapVisible] = useState(false);
+
 	return (
 		<Segment.Group>
 			<Segment attached clearing>
@@ -29,8 +32,16 @@ const EventDetailInfo: React.FC<EventDetailInfoProps> = ({ event }) => {
 				<span style={{ display: "inline-block", marginBottom: "0.5em" }}>
 					{event.venue.address}
 				</span>
-				<Button floated="right" color="teal" size="tiny" content="地圖" />
+				<Button
+					onClick={() => setMapVisible(!mapVisible)}
+					floated="right"
+					color="teal"
+					size="tiny"
+					content={mapVisible ? "關閉地圖" : "顯示地圖"}
+				/>
 			</Segment>
+
+			{mapVisible ? <EventMap center={event.venue.latLng} /> : null}
 		</Segment.Group>
 	);
 };

@@ -122,13 +122,13 @@ const EventForm: React.FC = () => {
 							style={{ marginBottom: "1em" }}
 						/>
 
-						<MyPlacesInput label="縣市" name="city" placeholder="縣市" />
+						<MyPlacesInput label="縣市" name="city" placeholder="地區/縣市" />
 
 						<MyPlacesInput
 							disabled={!values.city.latLng}
 							label="場地地址"
 							name="venue"
-							placeholder="場地"
+							placeholder="場地地址"
 							options={{
 								location: new google.maps.LatLng(values.city.latLng),
 								radius: 1000,

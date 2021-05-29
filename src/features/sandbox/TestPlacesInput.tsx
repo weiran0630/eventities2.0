@@ -4,7 +4,11 @@ import PlacesAutocomplete, {
 	getLatLng,
 } from "react-places-autocomplete";
 
-const TestPlacesInput: React.FC = () => {
+interface TestPlacesInputProps {
+	setLatLng: (center: { lat: number; lng: number }) => void;
+}
+
+const TestPlacesInput: React.FC<TestPlacesInputProps> = ({ setLatLng }) => {
 	const [address, setAddress] = useState<string>("");
 
 	const handleChange = (address: string) => {
@@ -16,6 +20,7 @@ const TestPlacesInput: React.FC = () => {
 		const latLng = await getLatLng(results[0]);
 		try {
 			console.log("Success", latLng);
+			setLatLng(latLng);
 		} catch (error) {
 			console.error("Error", error);
 		}

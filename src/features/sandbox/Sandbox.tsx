@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "semantic-ui-react";
 import { increment, decrement } from "../../app/store/slice/sandboxSlice";
 import { openModal } from "../../app/store/slice/modalSlice";
 import { useTypedDispatch, useTypedSelector } from "../../app/store/hooks";
 import TestPlacesInput from "./TestPlacesInput";
+import TestMap from "./TestMap";
 
 const Sandbox: React.FC = () => {
 	const count = useTypedSelector((state) => state.sandbox.count);
 	const dispatch = useTypedDispatch();
+	const [latLng, setLatLng] = useState({ lat: 59.95, lng: 30.33 });
 
 	return (
 		<>
@@ -31,7 +33,8 @@ const Sandbox: React.FC = () => {
 				color="teal"
 			/>
 			<div style={{ marginTop: "15px" }}>
-				<TestPlacesInput></TestPlacesInput>
+				<TestPlacesInput setLatLng={setLatLng} />
+				<TestMap center={latLng} />
 			</div>
 		</>
 	);
