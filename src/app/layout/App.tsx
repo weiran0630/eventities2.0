@@ -1,6 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { Container } from "semantic-ui-react";
+import { ToastContainer } from "react-toastify";
 
 import EventDashboard from "../../features/events/eventDashboard/EventDashboard";
 import EventDetailPage from "../../features/events/eventDetail/EventDetailPage";
@@ -14,6 +15,7 @@ const App: React.FC = () => {
 	return (
 		<>
 			<ModalManager />
+			<ToastContainer position="bottom-right" hideProgressBar />
 			<Route exact path="/" component={HomePage} />
 			<Route
 				path={"/(.+)"}

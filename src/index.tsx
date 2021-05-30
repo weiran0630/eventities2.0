@@ -1,5 +1,7 @@
 import ReactDOM from "react-dom";
 import "semantic-ui-css/semantic.min.css";
+import "react-toastify/dist/ReactToastify.min.css";
+import "react-calendar/dist/Calendar.css";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import reportWebVitals from "./reportWebVitals";
@@ -8,8 +10,11 @@ import "./app/layout/styles.scss";
 import App from "./app/layout/App";
 import store from "./app/store";
 import ScrollToTop from "./app/layout/ScrollToTop";
+import { fetchEvent } from "./app/store/slice/eventSlice";
 
 const rootElement = document.querySelector("#root");
+
+store.dispatch(fetchEvent());
 
 const render = () => {
 	ReactDOM.render(

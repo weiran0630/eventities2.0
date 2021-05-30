@@ -11,14 +11,14 @@ const authSlice = createSlice({
 	name: "event",
 	initialState,
 	reducers: {
-		signIn(state, action: PayloadAction<string>) {
+		signIn: (state, action: PayloadAction<string>) => {
 			state.authenticated = true;
 			state.currentUser = {
 				email: action.payload,
 				photoURL: "/assets/user.png",
 			};
 		},
-		singOut(state) {
+		singOut: (state) => {
 			state.authenticated = false;
 			state.currentUser = null;
 		},

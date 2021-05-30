@@ -1,3 +1,4 @@
+import { asyncReducer } from "./slice/asyncSlice";
 import { sandboxReducer } from "./slice/sandboxSlice";
 import { modalReducer } from "./slice/modalSlice";
 import { configureStore } from "@reduxjs/toolkit";
@@ -10,6 +11,7 @@ const store = configureStore({
 		modals: modalReducer,
 		sandbox: sandboxReducer,
 		auth: authReducer,
+		async: asyncReducer,
 	},
 	devTools: process.env.NODE_ENV !== "production",
 });
