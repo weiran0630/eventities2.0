@@ -1,12 +1,4 @@
-export const dateToString = (date: Date) =>
-	date.toLocaleTimeString([], {
-		year: "numeric",
-		month: "numeric",
-		day: "numeric",
-		hour: "2-digit",
-		minute: "2-digit",
-	});
-
+import { dateToString } from "../common/util";
 export const sampleData = [
 	{
 		id: "1",

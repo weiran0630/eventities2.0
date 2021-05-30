@@ -10,11 +10,8 @@ import "./app/layout/styles.scss";
 import App from "./app/layout/App";
 import store from "./app/store";
 import ScrollToTop from "./app/layout/ScrollToTop";
-import { fetchEvent } from "./app/store/slice/eventSlice";
 
 const rootElement = document.querySelector("#root");
-
-store.dispatch(fetchEvent());
 
 const render = () => {
 	ReactDOM.render(

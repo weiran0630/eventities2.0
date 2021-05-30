@@ -1,12 +1,7 @@
+import { Event } from "./../../common/model/interfaces";
 import { toast } from "react-toastify";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Event } from "../../common/model/interfaces";
-import { fetchSampleData } from "../../API/MockApi";
-import {
-	asyncActionError,
-	asyncActionFinish,
-	asyncActionStart,
-} from "./asyncSlice";
+// import { fetchSampleData } from "../../API/MockApi";
 
 const initialState = {
 	events: [] as Event[],
@@ -14,14 +9,10 @@ const initialState = {
 
 export const fetchEvent = createAsyncThunk(
 	"event/fetchEvent",
-	async (placeholder: void, { dispatch }) => {
-		dispatch(asyncActionStart());
+	async (events: any) => {
 		try {
-			const response = await fetchSampleData();
-			dispatch(asyncActionFinish());
-			return response;
+			return events;
 		} catch (error) {
-			dispatch(asyncActionError(error));
 			toast.error(error);
 		}
 	}

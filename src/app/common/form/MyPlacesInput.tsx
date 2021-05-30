@@ -55,6 +55,7 @@ const MyPlacesInput: React.FC<MyPlacesInputProps> = ({
 					{meta.touched && meta.error ? (
 						<p style={{ color: "red", marginLeft: "0.1em" }}>此欄位不能爲空</p>
 					) : null}
+
 					{suggestions?.length > 0 && (
 						<Segment
 							loading={loading}

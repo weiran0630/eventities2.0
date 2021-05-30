@@ -7,7 +7,7 @@ import { Button, Header, Segment } from "semantic-ui-react";
 
 import { useTypedDispatch, useTypedSelector } from "../../../app/store/hooks";
 import { createEvent, updateEvent } from "../../../app/store/slice/eventSlice";
-import { dateToString } from "../../../app/API/sampleData";
+import { dateToString } from "../../../app/common/util";
 import { categoryOptions } from "../../../app/common/model/categoryOptions";
 import MySelectInput from "../../../app/common/form/MySelectInput";
 import MyTextInput from "../../../app/common/form/MyTextInput";
