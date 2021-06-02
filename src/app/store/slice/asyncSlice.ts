@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 	loading: false,
-	error: null,
+	error: null as any,
 };
 
 const asyncSlice = createSlice({

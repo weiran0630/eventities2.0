@@ -12,7 +12,7 @@ export interface Place {
 export interface Event {
 	id: string;
 	title: string;
-	date: string;
+	date: Date;
 	category: string;
 	description: string;
 	city: { address: string; latLng: { lat: number; lng: number } };

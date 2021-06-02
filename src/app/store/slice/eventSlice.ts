@@ -7,7 +7,7 @@ const initialState = {
 	events: [] as Event[],
 };
 
-export const fetchEvent = createAsyncThunk(
+export const listenToEvent = createAsyncThunk(
 	"event/fetchEvent",
 	async (events: any) => {
 		try {
@@ -39,11 +39,16 @@ const eventSlice = createSlice({
 			state.events = filteredEvent;
 		},
 	},
-	extraReducers: {
-		[fetchEvent.fulfilled.type]: (state, action: PayloadAction<Event[]>) => {
+	extraReducers: (builder) => {
+		builder.addCase(listenToEvent.fulfilled, (state, action) => {
 			state.events = action.payload;
-		},
+		});
 	},
+	// extraReducers: {
+	// 	[listenToEvent.fulfilled.type]: (state, action: PayloadAction<Event[]>) => {
+	// 		state.events = action.payload;
+	// 	},
+	// },
 });
 
 export const { createEvent, updateEvent, deleteEvent } = eventSlice.actions;

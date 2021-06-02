@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import React, { useState } from "react";
 import { Button, Icon, Segment } from "semantic-ui-react";
 
@@ -24,7 +25,7 @@ const EventDetailInfo: React.FC<EventDetailInfoProps> = ({ event }) => {
 
 			<Segment attached clearing>
 				<Icon name="calendar" color="teal" style={iconStyle} />
-				<span>{event.date}</span>
+				<span>{format(event.date, "MMMM d, yyyy h:mm a")}</span>
 			</Segment>
 
 			<Segment attached clearing>

@@ -2,18 +2,25 @@ import React from "react";
 import cuid from "cuid";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, Redirect, useHistory, useParams } from "react-router-dom";
 import { Button, Header, Segment } from "semantic-ui-react";
 
 import { useTypedDispatch, useTypedSelector } from "../../../app/store/hooks";
-import { createEvent, updateEvent } from "../../../app/store/slice/eventSlice";
-import { dateToString } from "../../../app/common/util";
+import { listenToEvent } from "../../../app/store/slice/eventSlice";
 import { categoryOptions } from "../../../app/common/model/categoryOptions";
+import {
+	addEventToFirestore,
+	listenToEventFromFirestore,
+	updateEventToFirestore,
+} from "../../../app/firestore/firestoreService";
 import MySelectInput from "../../../app/common/form/MySelectInput";
 import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";
 import MyDateInput from "../../../app/common/form/MyDateInput";
 import MyPlacesInput from "../../../app/common/form/MyPlacesInput";
+import useFirestoreDoc from "../../../app/hooks/useFirestoreDoc";
+import LoadingComponent from "../../../app/common/loadingComponent";
+import { toast } from "react-toastify";
 
 interface ParamTypes {
 	id: string;
@@ -28,10 +35,19 @@ const EventForm: React.FC = () => {
 	);
 	const dispatch = useTypedDispatch();
 
+	const { loading, error } = useTypedSelector((state) => state.async);
+
+	useFirestoreDoc({
+		query: () => listenToEventFromFirestore(id),
+		data: (event: Event) => dispatch(listenToEvent([event])),
+		dependencies: [id, dispatch],
+		shouldExecute: !!id, // cast id into boolean, if exist => true
+	});
+
 	const initialValues = selectedEvent ?? {
 		title: "",
 		category: "",
-		date: dateToString(new Date()),
+		date: new Date(),
 		description: "",
 		city: {
 			address: "",
@@ -62,25 +78,33 @@ const EventForm: React.FC = () => {
 		}),
 	});
 
+	if (loading) return <LoadingComponent content="載入中" />;
+
+	if (error) return <Redirect to="/error" />;
+
 	return (
 		<Segment clearing>
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}
-				onSubmit={(values) => {
-					selectedEvent
-						? dispatch(updateEvent({ ...selectedEvent, ...values })) // only changes the props matches values
-						: dispatch(
-								createEvent({
+				onSubmit={async (values, { setSubmitting }) => {
+					try {
+						selectedEvent
+							? await updateEventToFirestore({ ...selectedEvent, ...values })
+							: await addEventToFirestore({
 									...values,
 									id: cuid(),
 									hostedBy: "Bob",
 									hostPhotoURL: "/assets/user.png",
 									attendees: [],
-									date: dateToString(new Date()),
-								})
-						  );
-					history.push(`/events`);
+									date: new Date(),
+							  });
+						setSubmitting(false);
+						history.push(`/events`);
+					} catch (error) {
+						toast.error(error.message);
+						setSubmitting(false);
+					}
 				}}
 			>
 				{({ isSubmitting, dirty, isValid, values }) => (

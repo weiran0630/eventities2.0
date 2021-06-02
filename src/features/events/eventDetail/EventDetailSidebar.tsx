@@ -29,7 +29,7 @@ const EventDetailSidebar: React.FC<EventDetailSidebarProps> = ({
 						<Item key={attendee.id} style={{ position: "relative" }}>
 							<Item.Image
 								size="tiny"
-								src={"/assets/user.png" || attendee.photoURL}
+								src={attendee.photoURL ? attendee.photoURL : "/assets/user.png"}
 							/>
 							<Item.Content verticalAlign="middle">
 								<Item.Header as="h3">

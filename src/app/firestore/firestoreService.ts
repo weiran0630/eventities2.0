@@ -1,4 +1,5 @@
-import { dateToString } from "../common/util";
+import cuid from "cuid";
+import { Event } from "../common/model/interfaces";
 import firebase from "../config/firebase";
 
 const db = firebase.firestore();
@@ -7,23 +8,40 @@ export const dataFromSnapshot = (
 	snapshot: firebase.firestore.DocumentSnapshot
 ) => {
 	if (!snapshot.exists) return undefined;
+
 	const data = snapshot.data();
 
 	for (const prop in data) {
 		if (data.hasOwnProperty(prop)) {
 			if (data[prop] instanceof firebase.firestore.Timestamp) {
-				data[prop] = dateToString(data[prop].toDate());
+				data[prop] = data[prop].toDate();
 			}
 		}
 	}
-	return {
-		...data,
-		id: snapshot.id,
-	};
+
+	return { ...data, id: snapshot.id };
 };
 
-export const getEventsFromFirestore = (observer: {
-	next?: (snapshot: firebase.firestore.QuerySnapshot) => void;
-	error?: (error: Error) => void;
-	complete?: () => void;
-}) => db.collection("events").onSnapshot(observer);
+export const listenToEventsFromFirestore = () =>
+	db.collection("events").orderBy("date");
+
+export const listenToEventFromFirestore = (id: string) =>
+	db.collection("events").doc(id);
+
+export const addEventToFirestore = (event: Event) =>
+	db.collection("events").add({
+		...event,
+		hostedBy: "Diana",
+		hostPhotoURL: "https://randomuser.me/api/portraits/women/1.jpg",
+		attendees: firebase.firestore.FieldValue.arrayUnion({
+			id: cuid(),
+			name: "Diana",
+			photoURL: "https://randomuser.me/api/portraits/women/1.jpg",
+		}),
+	});
+
+export const updateEventToFirestore = (event: Event) =>
+	db.collection("events").doc(event.id).update(event);
+
+export const deleteEventFromFirestore = (event: Event) =>
+	db.collection("events").doc(event.id).delete();

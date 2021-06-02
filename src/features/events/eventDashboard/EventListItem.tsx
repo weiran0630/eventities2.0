@@ -1,19 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Segment, Item, Icon, List, Button } from "semantic-ui-react";
+import { format } from "date-fns";
 
 import { Event } from "../../../app/common/model/interfaces";
-import { useTypedDispatch } from "../../../app/store/hooks";
-import { deleteEvent } from "../../../app/store/slice/eventSlice";
 import EventListAttendee from "./EventListAttendee";
+import { deleteEventFromFirestore } from "../../../app/firestore/firestoreService";
 
 interface EventListItemProps {
 	event: Event;
 }
 
 const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
-	const dispatch = useTypedDispatch();
-
 	return (
 		<Segment.Group>
 			<Segment>
@@ -30,7 +28,8 @@ const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
 
 			<Segment>
 				<span>
-					<Icon name="clock" color="teal" /> {event.date}
+					<Icon name="clock" color="teal" />{" "}
+					{format(event.date, "MMMM d, yyyy h:mm a")}
 					<Icon
 						name="marker"
 						color="teal"
@@ -59,8 +58,8 @@ const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
 					style={{ marginTop: "1em", marginLeft: "0.5em" }}
 				/>
 				<Button
-					onClick={() => {
-						dispatch(deleteEvent(event.id));
+					onClick={async () => {
+						await deleteEventFromFirestore(event);
 					}}
 					basic
 					color="red"

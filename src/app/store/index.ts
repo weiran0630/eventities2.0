@@ -1,7 +1,9 @@
+import { configureStore } from "@reduxjs/toolkit";
+import { getDefaultMiddleware } from "@reduxjs/toolkit";
+
 import { asyncReducer } from "./slice/asyncSlice";
 import { sandboxReducer } from "./slice/sandboxSlice";
 import { modalReducer } from "./slice/modalSlice";
-import { configureStore } from "@reduxjs/toolkit";
 import { eventReducer } from "./slice/eventSlice";
 import { authReducer } from "./slice/authSlice";
 
@@ -13,6 +15,7 @@ const store = configureStore({
 		auth: authReducer,
 		async: asyncReducer,
 	},
+	middleware: getDefaultMiddleware({ serializableCheck: false }),
 	devTools: process.env.NODE_ENV !== "production",
 });
 

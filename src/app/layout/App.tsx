@@ -10,6 +10,7 @@ import HomePage from "../../features/home/HomePage";
 import NavBar from "../../features/nav/NavBar";
 import Sandbox from "../../features/sandbox/Sandbox";
 import ModalManager from "../common/modal/ModalManager";
+import ErrorComponent from "../common/errors/ErrorComponent";
 
 const App: React.FC = () => {
 	return (
@@ -27,6 +28,7 @@ const App: React.FC = () => {
 							<Route path="/events/:id" component={EventDetailPage} />
 							<Route path="/sandbox" component={Sandbox} />
 							<Route path={["/create", "/manage/:id"]} component={EventForm} />
+							<Route path="/error" component={ErrorComponent} />
 						</Container>
 					</>
 				)}

@@ -1,9 +1,8 @@
-import { dateToString } from "../common/util";
 export const sampleData = [
 	{
 		id: "1",
 		title: "Trip to Empire State building",
-		date: dateToString(new Date("2018-03-21")),
+		date: new Date("2018-03-21"),
 		category: "culture",
 		description:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",
@@ -39,7 +38,7 @@ export const sampleData = [
 	{
 		id: "2",
 		title: "Trip to Punch and Judy Pub",
-		date: dateToString(new Date("2018-03-18")),
+		date: new Date("2018-03-18"),
 		category: "drinks",
 		description:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",

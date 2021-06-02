@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Segment, Image, Item, Button, Header } from "semantic-ui-react";
+import { format } from "date-fns";
 
 import { Event } from "../../../app/common/model/interfaces";
 
@@ -40,7 +41,7 @@ const EventDetailHeader: React.FC<EventDetailHeaderProps> = ({ event }) => {
 									content={event.title}
 									style={{ color: "white" }}
 								/>
-								<p>活動日期：{event.date}</p>
+								<p>活動日期：{format(event.date, "MMMM d, yyyy h:mm a")}</p>
 								<p>
 									舉辦人：<strong>{event.hostedBy}</strong>
 								</p>
