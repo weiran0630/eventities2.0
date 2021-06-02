@@ -25,20 +25,19 @@ const EventDetailInfo: React.FC<EventDetailInfoProps> = ({ event }) => {
 
 			<Segment attached clearing>
 				<Icon name="calendar" color="teal" style={iconStyle} />
-				<span>{format(event.date, "MMMM d, yyyy h:mm a")}</span>
+				{format(event.date, "MMMM d, yyyy h:mm a")}
 			</Segment>
 
 			<Segment attached clearing>
 				<Icon name="marker" color="teal" style={iconStyle} />
-				<span style={{ display: "inline-block", marginBottom: "0.5em" }}>
-					{event.venue.address}
-				</span>
+				<span style={{ display: "inline-block" }}>{event.venue.address}</span>
 				<Button
 					onClick={() => setMapVisible(!mapVisible)}
 					floated="right"
 					color="teal"
 					size="tiny"
 					content={mapVisible ? "關閉地圖" : "顯示地圖"}
+					style={{ marginTop: "1em" }}
 				/>
 			</Segment>
 

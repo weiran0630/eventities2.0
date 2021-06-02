@@ -45,3 +45,8 @@ export const updateEventToFirestore = (event: Event) =>
 
 export const deleteEventFromFirestore = (event: Event) =>
 	db.collection("events").doc(event.id).delete();
+
+export const cancelEventToggle = (event: Event) =>
+	db.collection("events").doc(event.id).update({
+		isCancelled: !event.isCancelled,
+	});

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Segment, Item, Icon, List, Button } from "semantic-ui-react";
+import { Segment, Item, Icon, List, Button, Label } from "semantic-ui-react";
 import { format } from "date-fns";
 
 import { Event } from "../../../app/common/model/interfaces";
@@ -21,6 +21,14 @@ const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
 						<Item.Content>
 							<Item.Header content={event.title} />
 							<Item.Description>{`舉辦人：${event.hostedBy}`}</Item.Description>
+							{event.isCancelled && (
+								<Label
+									style={{ top: "-40px" }}
+									ribbon="right"
+									color="grey"
+									content="此活動已被暫時取消"
+								/>
+							)}
 						</Item.Content>
 					</Item>
 				</Item.Group>

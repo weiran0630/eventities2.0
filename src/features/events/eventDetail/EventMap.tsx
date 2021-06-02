@@ -23,15 +23,14 @@ interface EventMapProps {
 const EventMap: React.FC<EventMapProps> = ({ center, zoom = 11 }) => {
 	return (
 		<Segment attached="bottom" style={{ padding: 0 }}>
-			<div style={{ height: 300, width: "100%" }}>
-				<GoogleMapReact
-					center={center}
-					bootstrapURLKeys={{ key: apiKey }}
-					defaultZoom={zoom}
-				>
-					<Marker lat={center.lat} lng={center.lng} />
-				</GoogleMapReact>
-			</div>
+			<GoogleMapReact
+				style={{ height: 300, width: "100%" }}
+				center={center}
+				bootstrapURLKeys={{ key: apiKey }}
+				defaultZoom={zoom}
+			>
+				<Marker lat={center.lat} lng={center.lng} />
+			</GoogleMapReact>
 		</Segment>
 	);
 };

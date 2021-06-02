@@ -20,6 +20,7 @@ export interface Event {
 	hostedBy: string;
 	hostPhotoURL: string;
 	attendees: Attendee[];
+	isCancelled: boolean;
 }
 
 export interface searchOptions {

@@ -1,18 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import cuid from "cuid";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { Link, Redirect, useHistory, useParams } from "react-router-dom";
-import { Button, Header, Segment } from "semantic-ui-react";
+import { Button, Confirm, Header, Segment } from "semantic-ui-react";
+import { toast } from "react-toastify";
 
 import { useTypedDispatch, useTypedSelector } from "../../../app/store/hooks";
 import { listenToEvent } from "../../../app/store/slice/eventSlice";
 import { categoryOptions } from "../../../app/common/model/categoryOptions";
-import {
-	addEventToFirestore,
-	listenToEventFromFirestore,
-	updateEventToFirestore,
-} from "../../../app/firestore/firestoreService";
 import MySelectInput from "../../../app/common/form/MySelectInput";
 import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";
@@ -20,7 +16,12 @@ import MyDateInput from "../../../app/common/form/MyDateInput";
 import MyPlacesInput from "../../../app/common/form/MyPlacesInput";
 import useFirestoreDoc from "../../../app/hooks/useFirestoreDoc";
 import LoadingComponent from "../../../app/common/loadingComponent";
-import { toast } from "react-toastify";
+import {
+	addEventToFirestore,
+	cancelEventToggle,
+	listenToEventFromFirestore,
+	updateEventToFirestore,
+} from "../../../app/firestore/firestoreService";
 
 interface ParamTypes {
 	id: string;
@@ -30,39 +31,48 @@ const EventForm: React.FC = () => {
 	const { id } = useParams<ParamTypes>();
 	const history = useHistory();
 
-	const selectedEvent = useTypedSelector(({ event }) =>
-		event.events.find((e) => e.id === id)
-	);
 	const dispatch = useTypedDispatch();
-
+	const selectedEvent = useTypedSelector((state) =>
+		state.event.events.find((e) => e.id === id)
+	);
 	const { loading, error } = useTypedSelector((state) => state.async);
 
 	useFirestoreDoc({
 		query: () => listenToEventFromFirestore(id),
 		data: (event: Event) => dispatch(listenToEvent([event])),
+		shouldExecute: !!id,
 		dependencies: [id, dispatch],
-		shouldExecute: !!id, // cast id into boolean, if exist => true
 	});
 
-	const initialValues = selectedEvent ?? {
+	const [loadingCancel, setLoadingCancel] = useState(false);
+	const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+
+	const handleCancelToggle = async (event: typeof selectedEvent) => {
+		setConfirmModalOpen(false);
+		setLoadingCancel(true);
+		try {
+			await cancelEventToggle(event!);
+			setLoadingCancel(false);
+		} catch (error) {
+			setLoadingCancel(true);
+			toast.error(error.message);
+		}
+	};
+
+	const initialValues = {
 		title: "",
 		category: "",
 		date: new Date(),
 		description: "",
 		city: {
 			address: "",
-			latLng: {
-				lat: null as unknown as number,
-				lng: null as unknown as number,
-			},
+			latLng: { lat: 0, lng: 0 },
 		},
 		venue: {
 			address: "",
-			latLng: {
-				lat: null as unknown as number,
-				lng: null as unknown as number,
-			},
+			latLng: { lat: 0, lng: 0 },
 		},
+		isCancelled: false,
 	};
 
 	const validationSchema = Yup.object({
@@ -85,7 +95,7 @@ const EventForm: React.FC = () => {
 	return (
 		<Segment clearing>
 			<Formik
-				initialValues={initialValues}
+				initialValues={selectedEvent ? selectedEvent : initialValues}
 				validationSchema={validationSchema}
 				onSubmit={async (values, { setSubmitting }) => {
 					try {
@@ -97,7 +107,6 @@ const EventForm: React.FC = () => {
 									hostedBy: "Bob",
 									hostPhotoURL: "/assets/user.png",
 									attendees: [],
-									date: new Date(),
 							  });
 						setSubmitting(false);
 						history.push(`/events`);
@@ -107,7 +116,7 @@ const EventForm: React.FC = () => {
 					}
 				}}
 			>
-				{({ isSubmitting, dirty, isValid, values }) => (
+				{({ isSubmitting, dirty, isValid, values, initialValues }) => (
 					<Form className="ui form">
 						<Header
 							sub
@@ -160,6 +169,19 @@ const EventForm: React.FC = () => {
 							}}
 						/>
 
+						{selectedEvent && (
+							<Button
+								loading={loadingCancel}
+								type="button"
+								floated="left"
+								color={selectedEvent.isCancelled ? "green" : "red"}
+								content={
+									selectedEvent.isCancelled ? "重新啓動活動" : "暫停活動"
+								}
+								onClick={() => setConfirmModalOpen(true)}
+							/>
+						)}
+
 						<Button
 							loading={isSubmitting}
 							disabled={!isValid || !dirty || isSubmitting}
@@ -172,14 +194,26 @@ const EventForm: React.FC = () => {
 						<Button
 							disabled={isSubmitting}
 							as={Link}
-							to="/events"
+							to={id ? `/events/${id}` : "/events"}
 							type="submit"
 							floated="right"
-							content="取消"
+							content="返回"
 						/>
 					</Form>
 				)}
 			</Formik>
+			<Confirm
+				content={
+					selectedEvent?.isCancelled
+						? "這會重新啓動您的活動，是否確定？"
+						: "這會取消您的活動，是否確定？"
+				}
+				open={confirmModalOpen}
+				onCancel={() => setConfirmModalOpen(false)}
+				onConfirm={async () => {
+					await handleCancelToggle(selectedEvent);
+				}}
+			/>
 		</Segment>
 	);
 };
