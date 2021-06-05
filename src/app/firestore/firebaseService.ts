@@ -16,6 +16,7 @@ export const registerInFirebase = async (creds: {
 		const result = await firebase
 			.auth()
 			.createUserWithEmailAndPassword(creds.email, creds.password);
+
 		await result.user?.updateProfile({ displayName: creds.displayName });
 		return await setUserProfileData(result.user!);
 	} catch (error) {
@@ -30,8 +31,6 @@ export const socialLogin = async (selectedProvider: string) => {
 		const result = await firebase
 			.auth()
 			.signInWithPopup(provider as firebase.auth.GoogleAuthProvider);
-
-		console.log(result);
 
 		if (result.additionalUserInfo?.isNewUser) {
 			await setUserProfileData(result.user!);
