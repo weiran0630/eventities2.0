@@ -19,7 +19,7 @@ import LoadingComponent from "../../../app/common/loadingComponent";
 import {
 	addEventToFirestore,
 	cancelEventToggle,
-	listenToEventFromFirestore,
+	listenToIndividualEventFromFirestore,
 	updateEventToFirestore,
 } from "../../../app/firestore/firestoreService";
 
@@ -38,7 +38,7 @@ const EventForm: React.FC = () => {
 	const { loading, error } = useTypedSelector((state) => state.async);
 
 	useFirestoreDoc({
-		query: () => listenToEventFromFirestore(id),
+		query: () => listenToIndividualEventFromFirestore(id),
 		data: (event: Event) => dispatch(listenToEvent([event])),
 		shouldExecute: !!id,
 		dependencies: [id, dispatch],

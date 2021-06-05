@@ -39,16 +39,12 @@ const eventSlice = createSlice({
 			state.events = filteredEvent;
 		},
 	},
-	extraReducers: (builder) => {
-		builder.addCase(listenToEvent.fulfilled, (state, action) => {
+
+	extraReducers: {
+		[listenToEvent.fulfilled.type]: (state, action: PayloadAction<Event[]>) => {
 			state.events = action.payload;
-		});
+		},
 	},
-	// extraReducers: {
-	// 	[listenToEvent.fulfilled.type]: (state, action: PayloadAction<Event[]>) => {
-	// 		state.events = action.payload;
-	// 	},
-	// },
 });
 
 export const { createEvent, updateEvent, deleteEvent } = eventSlice.actions;

@@ -25,7 +25,7 @@ export const dataFromSnapshot = (
 export const listenToEventsFromFirestore = () =>
 	db.collection("events").orderBy("date");
 
-export const listenToEventFromFirestore = (id: string) =>
+export const listenToIndividualEventFromFirestore = (id: string) =>
 	db.collection("events").doc(id);
 
 export const addEventToFirestore = (event: Event) =>
@@ -35,7 +35,7 @@ export const addEventToFirestore = (event: Event) =>
 		hostPhotoURL: "https://randomuser.me/api/portraits/women/1.jpg",
 		attendees: firebase.firestore.FieldValue.arrayUnion({
 			id: cuid(),
-			name: "Diana",
+			displayName: "Diana",
 			photoURL: "https://randomuser.me/api/portraits/women/1.jpg",
 		}),
 	});
@@ -50,3 +50,11 @@ export const cancelEventToggle = (event: Event) =>
 	db.collection("events").doc(event.id).update({
 		isCancelled: !event.isCancelled,
 	});
+
+export const setUserProfileData = (user: firebase.User) => {
+	return db.collection("user").doc(user.uid).set({
+		displayName: user.displayName,
+		email: user.email,
+		createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+	});
+};

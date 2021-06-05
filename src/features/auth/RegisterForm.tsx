@@ -7,40 +7,54 @@ import ModalWrapper from "../../app/common/modal/ModalWrapper";
 import MyTextInput from "../../app/common/form/MyTextInput";
 import { useTypedDispatch } from "../../app/store/hooks";
 import { closeModal } from "../../app/store/slice/modalSlice";
-import { signInWithEmail } from "../../app/firestore/firebaseService";
+import { registerInFirebase } from "../../app/firestore/firebaseService";
 import SocialLogin from "./SocialLogin";
 
 const validationSchema = Yup.object({
+	displayName: Yup.string().required("用戶名爲必填"),
 	email: Yup.string()
 		.email("請輸入正確電郵地址")
 		.required("電郵地址爲必填，請重新確認"),
-	password: Yup.string().required("請輸入密碼"),
+	password: Yup.string()
+		.required("請輸入密碼")
+		.min(6, "密碼必須爲6個字符或以上"),
 });
 
-const LoginForm: React.FC = () => {
+const RegisterForm: React.FC = () => {
 	const dispatch = useTypedDispatch();
 
 	return (
-		<ModalWrapper size="mini" header="登入 Eventities">
+		<ModalWrapper size="mini" header="登入Eventities">
 			<Formik
-				initialValues={{ email: "", password: "", auth: "" }}
+				initialValues={{ displayName: "", email: "", password: "", auth: "" }}
 				validationSchema={validationSchema}
 				onSubmit={async (values, { setSubmitting, setErrors }) => {
 					try {
-						await signInWithEmail(values);
+						await registerInFirebase(values);
+						setSubmitting(false);
 						dispatch(closeModal());
 					} catch (error) {
 						setErrors({
-							auth: "帳號或密碼存在錯誤，請再次確認",
+							auth: error.message,
 						});
-					} finally {
 						setSubmitting(false);
 					}
 				}}
 			>
 				{({ isSubmitting, dirty, isValid, errors }) => (
 					<Form className="ui form">
-						<MyTextInput label="email" name="email" placeholder="電子郵件" />
+						<MyTextInput
+							label="displayName"
+							name="displayName"
+							placeholder="用戶名"
+						/>
+
+						<MyTextInput
+							label="email"
+							name="email"
+							type="email"
+							placeholder="電子郵件"
+						/>
 
 						<MyTextInput
 							label="password"
@@ -54,13 +68,13 @@ const LoginForm: React.FC = () => {
 						)}
 
 						<Button
-							fluid
 							loading={isSubmitting}
 							disabled={!isValid || !dirty || isSubmitting}
 							type="submit"
+							fluid
 							size="large"
 							color="teal"
-							content="登錄"
+							content="註冊"
 						/>
 
 						<Divider horizontal content="或您可以" />
@@ -73,4 +87,4 @@ const LoginForm: React.FC = () => {
 	);
 };
 
-export default LoginForm;
+export default RegisterForm;

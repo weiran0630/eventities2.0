@@ -5,7 +5,7 @@ import { asyncReducer } from "./slice/asyncSlice";
 import { sandboxReducer } from "./slice/sandboxSlice";
 import { modalReducer } from "./slice/modalSlice";
 import { eventReducer } from "./slice/eventSlice";
-import { authReducer } from "./slice/authSlice";
+import { authReducer, verifyAuth } from "./slice/authSlice";
 
 const store = configureStore({
 	reducer: {
@@ -22,5 +22,7 @@ const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
+
+store.dispatch(verifyAuth());
 
 export default store;

@@ -1,21 +1,39 @@
+import firebase from "../../config/firebase";
+import { AppDispatch } from "./../index";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export type User = null | { email: string; photoURL: string };
+import { appLoaded } from "./asyncSlice";
 
 const initialState = {
-	authenticated: true,
-	currentUser: { email: "bob@test.com", photoURL: "/assets/user.png" } as User,
+	authenticated: false,
+	currentUser: null as any,
+};
+
+/** this function would be called every time store initialize */
+export const verifyAuth = () => {
+	return (dispatch: AppDispatch) =>
+		firebase.auth().onAuthStateChanged((user) => {
+			if (user) {
+				dispatch(signIn(user));
+				dispatch(appLoaded()); // stops loading component after singIn or signOut complete
+			} else {
+				dispatch(singOut());
+				dispatch(appLoaded());
+			}
+		});
 };
 
 const authSlice = createSlice({
-	name: "event",
+	name: "auth",
 	initialState,
 	reducers: {
-		signIn: (state, action: PayloadAction<string>) => {
+		signIn: (state, { payload }: PayloadAction<firebase.User>) => {
 			state.authenticated = true;
 			state.currentUser = {
-				email: action.payload,
-				photoURL: "/assets/user.png",
+				email: payload.email,
+				photoURL: payload.photoURL,
+				uid: payload.uid,
+				displayName: payload.displayName,
+				providerId: payload.providerData[0]?.providerId,
 			};
 		},
 		singOut: (state) => {
@@ -25,6 +43,6 @@ const authSlice = createSlice({
 	},
 });
 
-export const { signIn, singOut } = authSlice.actions;
+export const { singOut, signIn } = authSlice.actions;
 
 export const authReducer = authSlice.reducer;

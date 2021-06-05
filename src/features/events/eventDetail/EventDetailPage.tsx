@@ -4,7 +4,7 @@ import { Grid } from "semantic-ui-react";
 
 import LoadingComponent from "../../../app/common/loadingComponent";
 import { Event } from "../../../app/common/model/interfaces";
-import { listenToEventFromFirestore } from "../../../app/firestore/firestoreService";
+import { listenToIndividualEventFromFirestore } from "../../../app/firestore/firestoreService";
 import useFirestoreDoc from "../../../app/hooks/useFirestoreDoc";
 import { useTypedDispatch, useTypedSelector } from "../../../app/store/hooks";
 import { listenToEvent } from "../../../app/store/slice/eventSlice";
@@ -29,7 +29,7 @@ const EventDetailPage: React.FC = () => {
 	const dispatch = useTypedDispatch();
 
 	useFirestoreDoc({
-		query: () => listenToEventFromFirestore(id),
+		query: () => listenToIndividualEventFromFirestore(id),
 		data: (event: Event) => dispatch(listenToEvent([event])),
 		dependencies: [id, dispatch],
 	});
