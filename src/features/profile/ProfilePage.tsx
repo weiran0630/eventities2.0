@@ -34,11 +34,11 @@ const ProfilePage: React.FC = () => {
 			<Grid.Column width={16}>
 				<ProfileHeader
 					profile={selectedUserProfile}
-					isCurrentUser={currentUser.uid === selectedUserProfile.id}
+					isCurrentUser={currentUser?.uid === selectedUserProfile.id} // if there's no current user just pass the selected user
 				/>
 				<ProfileContent
 					profile={selectedUserProfile}
-					isCurrentUser={currentUser.uid === selectedUserProfile.id}
+					isCurrentUser={currentUser?.uid === selectedUserProfile.id}
 				/>
 			</Grid.Column>
 		</Grid>
