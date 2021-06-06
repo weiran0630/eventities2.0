@@ -6,6 +6,7 @@ import { sandboxReducer } from "./slice/sandboxSlice";
 import { modalReducer } from "./slice/modalSlice";
 import { eventReducer } from "./slice/eventSlice";
 import { authReducer, verifyAuth } from "./slice/authSlice";
+import { profileReducer } from "./slice/profileSlice";
 
 const store = configureStore({
 	reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
 		sandbox: sandboxReducer,
 		auth: authReducer,
 		async: asyncReducer,
+		profile: profileReducer,
 	},
 	middleware: getDefaultMiddleware({ serializableCheck: false }),
 	devTools: process.env.NODE_ENV !== "production",

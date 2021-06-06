@@ -9,11 +9,11 @@ const NavBar: React.FC = () => {
 	const authenticated = useTypedSelector((state) => state.auth.authenticated);
 
 	return (
-		<Menu inverted fixed="top">
+		<Menu inverted borderless fixed="top">
 			<Container>
 				<Menu.Item as={NavLink} exact to="/" header>
 					<img
-						src="/assets/logo.png"
+						src="/assets/icon.png"
 						alt="logo"
 						style={{ marginRight: "1em" }}
 					/>

@@ -14,6 +14,7 @@ import ModalManager from "../common/modal/ModalManager";
 import ErrorComponent from "../common/errors/ErrorComponent";
 import AccountPage from "../../features/auth/AccountPage";
 import { useTypedSelector } from "../store/hooks";
+import ProfilePage from "../../features/profile/ProfilePage";
 
 const App: React.FC = () => {
 	const { initialized } = useTypedSelector((state) => state.async);
@@ -37,6 +38,7 @@ const App: React.FC = () => {
 							<Route path="/events/:id" component={EventDetailPage} />
 							<Route path="/sandbox" component={Sandbox} />
 							<Route path="/account" component={AccountPage} />
+							<Route path="/profile/:id" component={ProfilePage} />
 							<Route path={["/create", "/manage/:id"]} component={EventForm} />
 							<Route path="/error" component={ErrorComponent} />
 						</Container>

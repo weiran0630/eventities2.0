@@ -1,7 +1,12 @@
+import {
+	getUserProfile,
+	dataFromSnapshot,
+} from "./../../firestore/firestoreService";
 import firebase from "../../config/firebase";
 import { AppDispatch } from "./../index";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { appLoaded } from "./asyncSlice";
+import { listenToCurrentUserProfile } from "./profileSlice";
 
 const initialState = {
 	authenticated: false,
@@ -14,7 +19,12 @@ export const verifyAuth = () => {
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
 				dispatch(signIn(user));
-				dispatch(appLoaded()); // stops loading component after singIn or signOut complete
+
+				const profileRef = getUserProfile(user.uid);
+				profileRef.onSnapshot((snapshot) => {
+					dispatch(listenToCurrentUserProfile(dataFromSnapshot(snapshot))); // get the use profile before tell app has been loaded
+					dispatch(appLoaded()); // stops loading component after singIn or signOut complete
+				});
 			} else {
 				dispatch(singOut());
 				dispatch(appLoaded());

@@ -8,7 +8,7 @@ import { useTypedSelector } from "../../app/store/hooks";
 
 const SignedInMenu: React.FC = () => {
 	const history = useHistory(); // hook: useHistory() access history object without wrapper in Route component
-	const currentUser = useTypedSelector((state) => state.auth.currentUser);
+	const { currentUserProfile } = useTypedSelector((state) => state.profile);
 
 	const handleSignOut = async () => {
 		try {
@@ -24,13 +24,18 @@ const SignedInMenu: React.FC = () => {
 			<Image
 				avatar
 				spaced="right"
-				src={currentUser!.photoURL || "/assets/user.png"}
+				src={currentUserProfile!.photoURL || "/assets/user.png"}
 			/>
 
-			<Dropdown pointing="top left" text={currentUser!.displayName}>
+			<Dropdown pointing="top left" text={currentUserProfile!.displayName}>
 				<Dropdown.Menu>
-					<Dropdown.Item as={Link} to="/form" text="新增活動" icon="plus" />
-					<Dropdown.Item text="我的頁面" icon="user" />
+					<Dropdown.Item as={Link} to="/create" text="新增活動" icon="plus" />
+					<Dropdown.Item
+						as={Link}
+						to={`/profile/${currentUserProfile.id}`}
+						text="我的頁面"
+						icon="user"
+					/>
 					<Dropdown.Item
 						as={Link}
 						to="/account"

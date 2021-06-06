@@ -9,7 +9,7 @@ const HomePage: React.FC = () => {
 				<Header as="h1" inverted>
 					<Image
 						size="massive"
-						src="/assets/logo.png"
+						src="/assets/icon.png"
 						style={{ marginBottom: "12px" }}
 					/>
 					Eventities
