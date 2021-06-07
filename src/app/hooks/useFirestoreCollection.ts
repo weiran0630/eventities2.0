@@ -14,15 +14,19 @@ interface config {
 	dependencies: any;
 }
 
+/** custom useEffect hooks to query firestore collection */
 const useFirestoreCollection = ({ query, data, dependencies }: config) => {
 	const dispatch = useTypedDispatch();
 
 	useEffect(() => {
 		dispatch(asyncActionStart());
+
 		const unsubscribe = query().onSnapshot(
 			(snapshot) => {
 				const docs = snapshot.docs.map((doc) => dataFromSnapshot(doc));
+
 				data(docs);
+
 				dispatch(asyncActionFinish());
 			},
 			(error) => dispatch(asyncActionError(error))

@@ -15,6 +15,7 @@ interface config {
 	shouldExecute?: boolean;
 }
 
+/** custom useEffect hooks to query firestore document */
 const useFirestoreDoc = ({
 	query,
 	data,
@@ -25,7 +26,9 @@ const useFirestoreDoc = ({
 
 	useEffect(() => {
 		if (!shouldExecute) return;
+
 		dispatch(asyncActionStart());
+
 		const unsubscribe = query().onSnapshot(
 			(snapshot) => {
 				if (!snapshot.exists) {
@@ -37,7 +40,9 @@ const useFirestoreDoc = ({
 					);
 					return;
 				}
+
 				data(dataFromSnapshot(snapshot));
+
 				dispatch(asyncActionFinish());
 			},
 			(error) => dispatch(asyncActionError(error))

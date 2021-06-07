@@ -22,16 +22,19 @@ const Sandbox: React.FC = () => {
 		<>
 			<h1>Testing 123123</h1>
 			<h3>The data is: {count}</h3>
+
 			<Button
 				onClick={() => dispatch(increment())}
 				content="Increment"
 				color="green"
 			/>
+
 			<Button
 				onClick={() => dispatch(decrement())}
 				content="Decrement"
 				color="red"
 			/>
+
 			<Button
 				name="delayedInc"
 				loading={loading && target === "delayedInc"}
@@ -42,6 +45,7 @@ const Sandbox: React.FC = () => {
 				content="Increment with Delay"
 				color="orange"
 			/>
+
 			<Button
 				name="delayedDec"
 				loading={loading && target === "delayedDec"}
@@ -52,6 +56,7 @@ const Sandbox: React.FC = () => {
 				content="Decrement with Delay"
 				color="blue"
 			/>
+
 			<Button
 				onClick={() =>
 					dispatch(openModal({ modalType: "TestModal", modalProps: { count } }))
@@ -59,6 +64,7 @@ const Sandbox: React.FC = () => {
 				content="Open Modal"
 				color="teal"
 			/>
+
 			{/* <div style={{ marginTop: "15px" }}>
 				<TestPlacesInput setLatLng={setLatLng} />
 				<TestMap center={latLng} />

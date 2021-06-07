@@ -21,6 +21,7 @@ export const verifyAuth = () => {
 				dispatch(signIn(user));
 
 				const profileRef = getUserProfile(user.uid);
+
 				profileRef.onSnapshot((snapshot) => {
 					dispatch(listenToCurrentUserProfile(dataFromSnapshot(snapshot))); // get the use profile before tell app has been loaded
 					dispatch(appLoaded()); // stops loading component after singIn or signOut complete

@@ -32,6 +32,7 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
 			size={size}
 		>
 			{header && <Modal.Header>{header}</Modal.Header>}
+
 			<Modal.Content>{children}</Modal.Content>
 		</Modal>
 	);

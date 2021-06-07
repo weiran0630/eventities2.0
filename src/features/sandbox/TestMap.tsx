@@ -7,11 +7,9 @@ interface AnyReactComponentProps {
 	lng: number;
 	text: string;
 }
-const AnyReactComponent: React.FC<AnyReactComponentProps> = ({
-	lat,
-	lng,
-	text,
-}) => <div>{text}</div>;
+const AnyReactComponent: React.FC<AnyReactComponentProps> = ({ text }) => (
+	<div>{text}</div>
+);
 
 interface TestMapProps {
 	center?: {

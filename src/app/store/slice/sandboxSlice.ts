@@ -11,6 +11,8 @@ const initialState = {
 	count: 0,
 };
 
+/** async reducer can be created with createAsyncThunk,
+ *  then add to extraReducers inside createSlide */
 export const delayedIncrementWithValue = createAsyncThunk(
 	"sandbox/delayedIncrement",
 	async (value: number, { dispatch }) => {
@@ -43,6 +45,7 @@ export const delayedDecrementWithValue = createAsyncThunk(
 	}
 );
 
+/** reducers can mutate state directly within rtk */
 const sandboxSlice = createSlice({
 	name: "sandbox",
 	initialState,
@@ -58,6 +61,7 @@ const sandboxSlice = createSlice({
 		},
 	},
 	extraReducers: {
+		/** for TypeScript, add .type after .fulfilled */
 		[delayedIncrementWithValue.fulfilled.type]: (
 			state,
 			action: PayloadAction<number>

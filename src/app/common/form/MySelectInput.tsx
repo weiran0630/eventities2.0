@@ -19,6 +19,7 @@ const MySelectInput: React.FC<MySelectInputProps> = ({ label, ...props }) => {
 				onBlur={() => helpers.setTouched(true)}
 				{...props}
 			/>
+
 			{meta.touched && meta.error ? (
 				<p style={{ color: "red", marginLeft: "0.1em" }}>{meta.error}</p>
 			) : null}

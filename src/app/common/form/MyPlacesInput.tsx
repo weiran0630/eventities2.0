@@ -77,6 +77,7 @@ const MyPlacesInput: React.FC<MyPlacesInputProps> = ({
 										<List.Header>
 											{suggestion.formattedSuggestion.mainText}
 										</List.Header>
+
 										<List.Description>
 											{suggestion.formattedSuggestion.secondaryText}
 										</List.Description>

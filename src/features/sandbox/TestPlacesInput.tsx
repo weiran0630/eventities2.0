@@ -18,6 +18,7 @@ const TestPlacesInput: React.FC<TestPlacesInputProps> = ({ setLatLng }) => {
 	const handleSelect = async (address: string) => {
 		const results = await geocodeByAddress(address);
 		const latLng = await getLatLng(results[0]);
+
 		try {
 			console.log("Success", latLng);
 			setLatLng(latLng);
@@ -41,16 +42,19 @@ const TestPlacesInput: React.FC<TestPlacesInputProps> = ({ setLatLng }) => {
 							className: "location-search-input",
 						})}
 					/>
+
 					<div className="autocomplete-dropdown-container">
 						{loading && <div>Loading...</div>}
 						{suggestions.map((suggestion) => {
 							const className = suggestion.active
 								? "suggestion-item--active"
 								: "suggestion-item";
+
 							// inline style for demonstration purpose
 							const style = suggestion.active
 								? { backgroundColor: "#fafafa", cursor: "pointer" }
 								: { backgroundColor: "#ffffff", cursor: "pointer" };
+
 							return (
 								<div
 									{...getSuggestionItemProps(suggestion, {

@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { format } from "date-fns";
-import { Button, Grid, Header, Icon, Tab } from "semantic-ui-react";
-
-import AboutForm from "../profileForm/AboutForm";
+import {
+	Button,
+	Card,
+	Grid,
+	Header,
+	Icon,
+	Tab,
+	Image,
+} from "semantic-ui-react";
 
 interface AboutTabProps {
 	profile: {
@@ -22,7 +27,7 @@ const AboutTab: React.FC<AboutTabProps> = ({ profile, isCurrentUser }) => {
 				<Grid.Column width={16}>
 					<Header floated="left">
 						<Icon name="user" color="teal" />
-						{`關於 ${profile.displayName}`}
+						照片
 					</Header>
 
 					{isCurrentUser && (
@@ -31,26 +36,23 @@ const AboutTab: React.FC<AboutTabProps> = ({ profile, isCurrentUser }) => {
 							color={editMode ? "red" : "green"}
 							floated="right"
 							onClick={() => setEditMode(!editMode)}
-							content={editMode ? "取消" : "修改頁面"}
+							content={editMode ? "取消" : "新增照片"}
 						/>
 					)}
 				</Grid.Column>
 
 				<Grid.Column width={16}>
 					{editMode ? (
-						<AboutForm profile={profile} setEditMode={setEditMode} />
+						<p>Photo Widgets</p>
 					) : (
-						<>
-							<div>
-								<strong>
-									加入日期：{format(profile.createdAt, "dd MMM yyyy")}
-								</strong>
+						<Card.Group itemsPerRow={5}>
+							<Image src={"/assets/user.png"} />
 
-								<div style={{ marginTop: 10 }}>
-									{profile.description || <em>點選修改頁面加入您的個人簡介</em>}
-								</div>
-							</div>
-						</>
+							<Button.Group fluid width={2}>
+								<Button basic color="green" content="主要" />
+								<Button basic color="red" icon="trash" />
+							</Button.Group>
+						</Card.Group>
 					)}
 				</Grid.Column>
 			</Grid>

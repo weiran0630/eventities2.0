@@ -1,10 +1,12 @@
 {
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"cSpell.words": [
+		"Eventities",
 		"borderless",
 		"creds",
 		"firestore",
 		"reduxjs",
+		"serializable",
 		"toastify"
 	]
 }

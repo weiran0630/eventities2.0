@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
+
 import LoadingComponent from "../../app/common/loadingComponent";
 import { getUserProfile } from "../../app/firestore/firestoreService";
 import useFirestoreDoc from "../../app/hooks/useFirestoreDoc";

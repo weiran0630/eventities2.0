@@ -25,6 +25,7 @@ export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
+/** call with every app initialize */
 store.dispatch(verifyAuth());
 
 export default store;

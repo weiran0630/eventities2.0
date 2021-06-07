@@ -10,6 +10,7 @@ const MyTextInput: React.FC<MyTextInputProps> = ({ label, ...props }) => {
 	return (
 		<FormField error={meta.touched && !!meta.error}>
 			<input {...field} placeholder={props.placeholder} type={props.type} />
+
 			{meta.touched && meta.error ? (
 				<p style={{ color: "red", marginLeft: "0.1em" }}>{meta.error}</p>
 			) : null}

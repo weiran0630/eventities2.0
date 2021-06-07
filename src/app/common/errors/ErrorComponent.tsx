@@ -9,6 +9,7 @@ const ErrorComponent: React.FC = () => {
 				textAlign="center"
 				content="Oops，發生未知錯誤，請聯絡開發人員協助改善網頁"
 			/>
+
 			<Button
 				as={Link}
 				to="/events"

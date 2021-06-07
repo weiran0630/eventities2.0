@@ -10,6 +10,7 @@ const MyTextArea: React.FC<MyTextAreaProps> = ({ label, ...props }) => {
 	return (
 		<FormField error={meta.touched && !!meta.error}>
 			<textarea {...field} placeholder={props.placeholder} />
+
 			{meta.touched && meta.error ? (
 				<p style={{ color: "red", marginLeft: "0.1em" }}>{meta.error}</p>
 			) : null}

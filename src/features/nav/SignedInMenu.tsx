@@ -2,8 +2,8 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Menu, Image, Dropdown } from "semantic-ui-react";
-import { signOut } from "../../app/firestore/firebaseService";
 
+import { signOut } from "../../app/firestore/firebaseService";
 import { useTypedSelector } from "../../app/store/hooks";
 
 const SignedInMenu: React.FC = () => {
@@ -24,15 +24,15 @@ const SignedInMenu: React.FC = () => {
 			<Image
 				avatar
 				spaced="right"
-				src={currentUserProfile!.photoURL || "/assets/user.png"}
+				src={currentUserProfile?.photoURL || "/assets/user.png"}
 			/>
 
-			<Dropdown pointing="top left" text={currentUserProfile!.displayName}>
+			<Dropdown pointing="top left" text={currentUserProfile?.displayName}>
 				<Dropdown.Menu>
 					<Dropdown.Item as={Link} to="/create" text="新增活動" icon="plus" />
 					<Dropdown.Item
 						as={Link}
-						to={`/profile/${currentUserProfile.id}`}
+						to={`/profile/${currentUserProfile?.id}`}
 						text="我的頁面"
 						icon="user"
 					/>

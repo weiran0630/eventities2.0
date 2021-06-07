@@ -14,6 +14,7 @@ const SignedOutMenu: React.FC = () => {
 				inverted
 				content="登錄"
 			/>
+
 			<Button
 				onClick={() => dispatch(openModal({ modalType: "RegisterForm" }))}
 				basic

@@ -52,11 +52,15 @@ export const cancelEventToggle = (event: Event) =>
 	});
 
 export const setUserProfileData = (user: firebase.User) => {
-	return db.collection("user").doc(user.uid).set({
-		displayName: user.displayName,
-		email: user.email,
-		createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-	});
+	return db
+		.collection("user")
+		.doc(user.uid)
+		.set({
+			displayName: user.displayName,
+			email: user.email,
+			photoURL: user.photoURL || null,
+			createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+		});
 };
 
 export const getUserProfile = (userId: string) => {

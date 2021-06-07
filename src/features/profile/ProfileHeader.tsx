@@ -33,6 +33,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 								size="small"
 								src={profile.photoURL || "/assets/user.png"}
 							/>
+
 							<Item.Content verticalAlign="middle">
 								<Header
 									as="h1"
@@ -53,10 +54,12 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 					{!isCurrentUser && (
 						<>
 							<Divider />
+
 							<Reveal animated="move down">
 								<Reveal.Content visible style={{ width: "100%" }}>
 									<Button fluid color="teal" content="追蹤中" />
 								</Reveal.Content>
+
 								<Reveal.Content hidden style={{ width: "100%" }}>
 									<Button basic fluid color="red" content="取消追蹤" />
 								</Reveal.Content>

@@ -23,6 +23,7 @@ const MyDateInput: React.FC<MyDateInputProps> = ({ label, ...props }) => {
 				selected={(field.value && new Date(field.value)) || null}
 				onChange={(value) => setFieldValue(field.name, value)}
 			/>
+
 			{meta.touched && meta.error ? (
 				<p style={{ color: "red", marginLeft: "0.1em" }}>{meta.error}</p>
 			) : null}
