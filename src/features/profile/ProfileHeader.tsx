@@ -46,7 +46,12 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 				</Grid.Column>
 
 				<Grid.Column width={4}>
-					<Statistic.Group color="teal" style={{ marginBottom: 10 }}>
+					<Statistic.Group
+						color="teal"
+						style={{
+							marginBottom: 10,
+							alignItem: "center",
+						}}>
 						<Statistic label="追蹤數" value={10} />
 						<Statistic label="追蹤中" value={87} />
 					</Statistic.Group>

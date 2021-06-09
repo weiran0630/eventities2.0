@@ -23,7 +23,7 @@ const NavBar: React.FC = () => {
 
 				<Menu.Item as={NavLink} to="/events" name="所有活動" />
 
-				<Menu.Item as={NavLink} to="/sandbox" name="Sandbox" />
+				{/* <Menu.Item as={NavLink} to="/sandbox" name="Sandbox" /> */}
 
 				{authenticated && (
 					<Menu.Item as={NavLink} to="/create">

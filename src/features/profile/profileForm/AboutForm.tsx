@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import { Button } from "semantic-ui-react";
+import { Button, Header } from "semantic-ui-react";
 
 import MyTextArea from "../../../app/common/form/MyTextArea";
 import MyTextInput from "../../../app/common/form/MyTextInput";
@@ -36,15 +36,16 @@ const AboutForm: React.FC<AboutFormProps> = ({ profile, setEditMode }) => {
 					setSubmitting(false);
 					setEditMode(false);
 				}
-			}}
-		>
+			}}>
 			{({ isSubmitting, isValid, dirty }) => (
 				<Form className="ui form">
+					<Header content="用戶名" size="tiny" color="teal" />
 					<MyTextInput
 						name="displayName"
 						label="displayName"
 						placeholder="用戶名"
 					/>
+					<Header content="簡介" size="tiny" color="teal" />
 					<MyTextArea
 						name="description"
 						label="description"

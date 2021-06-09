@@ -1,5 +1,4 @@
-import cuid from "cuid";
-import { Event } from "../common/model/interfaces";
+import { Attendee, Event } from "../common/model/interfaces";
 import firebase from "../config/firebase";
 
 const db = firebase.firestore();
@@ -28,17 +27,22 @@ export const listenToEventsFromFirestore = () =>
 export const listenToIndividualEventFromFirestore = (id: string) =>
 	db.collection("events").doc(id);
 
-export const addEventToFirestore = (event: Event) =>
+export const addEventToFirestore = (event: any) => {
+	const user = firebase.auth().currentUser;
+
 	db.collection("events").add({
 		...event,
-		hostedBy: "Diana",
-		hostPhotoURL: "https://randomuser.me/api/portraits/women/1.jpg",
+		hostUid: user?.uid,
+		hostedBy: user?.displayName,
+		hostPhotoURL: user?.photoURL || null,
 		attendees: firebase.firestore.FieldValue.arrayUnion({
-			id: cuid(),
-			displayName: "Diana",
-			photoURL: "https://randomuser.me/api/portraits/women/1.jpg",
+			id: user?.uid,
+			displayName: user?.displayName,
+			photoURL: user?.photoURL || null,
 		}),
+		attendeeIds: firebase.firestore.FieldValue.arrayUnion(user?.uid), // simple string based array to store attendees uid
 	});
+};
 
 export const updateEventToFirestore = (event: Event) =>
 	db.collection("events").doc(event.id).update(event);
@@ -136,4 +140,40 @@ export const deletePhotoFromCollection = (photoId: string) => {
 		.collection("photos")
 		.doc(photoId)
 		.delete();
+};
+
+export const addUserAttendance = (event: any) => {
+	const user = firebase.auth().currentUser;
+
+	return db
+		.collection("events")
+		.doc(event.id)
+		.update({
+			attendees: firebase.firestore.FieldValue.arrayUnion({
+				id: user?.uid,
+				displayName: user?.displayName,
+				photoURL: user?.photoURL || null,
+			}),
+			attendeeIds: firebase.firestore.FieldValue.arrayUnion(user?.uid),
+		});
+};
+
+export const cancelUserAttendance = async (event: any) => {
+	const user = firebase.auth().currentUser;
+
+	try {
+		const eventDoc = await db.collection("events").doc(event.id).get();
+		return db
+			.collection("events")
+			.doc(event.id)
+			.update({
+				attendeeIds: firebase.firestore.FieldValue.arrayRemove(user?.uid),
+				attendees: eventDoc
+					.data()
+					?.attendees.filter((attendee: Attendee) => attendee.id !== user?.uid),
+				// for object inside firestore we have to filter manually for removal
+			});
+	} catch (error) {
+		throw error;
+	}
 };

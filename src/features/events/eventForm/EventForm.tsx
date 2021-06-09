@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import cuid from "cuid";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { Link, Redirect, useHistory, useParams } from "react-router-dom";
@@ -101,21 +100,14 @@ const EventForm: React.FC = () => {
 					try {
 						selectedEvent
 							? await updateEventToFirestore({ ...selectedEvent, ...values })
-							: await addEventToFirestore({
-									...values,
-									id: cuid(),
-									hostedBy: "Bob",
-									hostPhotoURL: "/assets/user.png",
-									attendees: [],
-							  });
+							: await addEventToFirestore(values);
 						setSubmitting(false);
 						history.push(`/events`);
 					} catch (error) {
 						toast.error(error.message);
 						setSubmitting(false);
 					}
-				}}
-			>
+				}}>
 				{({ isSubmitting, dirty, isValid, values, initialValues }) => (
 					<Form className="ui form">
 						<Header

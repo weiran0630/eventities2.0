@@ -8,6 +8,8 @@ import {
 	Tab,
 	Image,
 } from "semantic-ui-react";
+import { toast } from "react-toastify";
+
 import PhotoUploadWidget from "../../../app/common/photos/PhotoUploadWidget";
 import {
 	deletePhotoFromCollection,
@@ -18,7 +20,6 @@ import useFirestoreCollection from "../../../app/hooks/useFirestoreCollection";
 import { useTypedDispatch, useTypedSelector } from "../../../app/store/hooks";
 import { listenToUserPhotos } from "../../../app/store/slice/profileSlice";
 import { CollectionRef } from "../../../app/common/model/interfaces";
-import { toast } from "react-toastify";
 import { deleteFromFirebaseStorage } from "../../../app/firestore/firebaseService";
 
 interface AboutTabProps {

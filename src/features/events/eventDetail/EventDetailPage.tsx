@@ -19,14 +19,16 @@ interface ParamTypes {
 
 const EventDetailPage: React.FC = () => {
 	const { id } = useParams<ParamTypes>();
-
+	const { currentUser } = useTypedSelector((state) => state.auth);
 	const selectedEvent = useTypedSelector(({ event }) =>
 		event.events.find((e) => e.id === id)
 	);
-
 	const { loading, error } = useTypedSelector((state) => state.async);
-
 	const dispatch = useTypedDispatch();
+	const isHost = selectedEvent?.hostUid === currentUser.uid; // is the current user the host of the event?
+	const isAttending = selectedEvent?.attendees.some(
+		(attendee) => attendee.id === currentUser.uid // is the current user an attender of the event?
+	);
 
 	useFirestoreDoc({
 		query: () => listenToIndividualEventFromFirestore(id),
@@ -42,13 +44,20 @@ const EventDetailPage: React.FC = () => {
 	return (
 		<Grid>
 			<Grid.Column width={10}>
-				<EventDetailHeader event={selectedEvent!} />
+				<EventDetailHeader
+					event={selectedEvent!}
+					isHost={isHost!}
+					isAttending={isAttending!}
+				/>
 				<EventDetailInfo event={selectedEvent!} />
 				<EventChatRoom />
 			</Grid.Column>
 
 			<Grid.Column width={6}>
-				<EventDetailSidebar attendees={selectedEvent!.attendees} />
+				<EventDetailSidebar
+					attendees={selectedEvent!.attendees}
+					hostUid={selectedEvent!.hostUid}
+				/>
 			</Grid.Column>
 		</Grid>
 	);

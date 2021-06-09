@@ -18,9 +18,19 @@ const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
 				<Item.Group>
 					<Item>
 						<Item.Image size="tiny" circular src={event.hostPhotoURL} />
+
 						<Item.Content>
 							<Item.Header content={event.title} />
-							<Item.Description>{`舉辦人：${event.hostedBy}`}</Item.Description>
+
+							<Item.Description>
+								舉辦人：
+								<Link
+									to={`/profile/${event.hostUid}`}
+									style={{ textDecoration: "underline", color: "inherit" }}>
+									{event.hostedBy}
+								</Link>
+							</Item.Description>
+
 							{event.isCancelled && (
 								<Label
 									style={{ top: "-40px" }}

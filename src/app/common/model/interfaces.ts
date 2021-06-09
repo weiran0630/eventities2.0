@@ -20,7 +20,9 @@ export interface Event {
 	venue: { address: string; latLng: { lat: number; lng: number } };
 	hostedBy: string;
 	hostPhotoURL: string;
+	hostUid: string;
 	attendees: Attendee[];
+	attendeesIds: string[];
 	isCancelled: boolean;
 }
 
