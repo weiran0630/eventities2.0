@@ -41,7 +41,7 @@ const eventSlice = createSlice({
 	},
 
 	extraReducers: {
-		[listenToEvent.fulfilled.type]: (state, action: PayloadAction<Event[]>) => {
+		[listenToEvent.fulfilled.type]: (state, action: any) => {
 			state.events = action.payload;
 		},
 	},

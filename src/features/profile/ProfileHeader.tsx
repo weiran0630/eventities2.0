@@ -31,14 +31,14 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 							<Item.Image
 								avatar
 								size="small"
-								src={profile.photoURL || "/assets/user.png"}
+								src={profile?.photoURL || "/assets/user.png"}
 							/>
 
 							<Item.Content verticalAlign="middle">
 								<Header
 									as="h1"
 									style={{ display: "block", marginBottom: 10 }}
-									content={profile.displayName}
+									content={profile?.displayName}
 								/>
 							</Item.Content>
 						</Item>

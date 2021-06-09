@@ -25,9 +25,9 @@ const EventDashboard: React.FC = () => {
 	};
 
 	useFirestoreCollection({
-		query: () => listenToEventsFromFirestore(),
+		query: () => listenToEventsFromFirestore(predicate),
 		data: (events: Event[]) => dispatch(listenToEvent(events)),
-		dependencies: [dispatch],
+		dependencies: [dispatch, predicate],
 	});
 
 	return (

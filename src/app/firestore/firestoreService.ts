@@ -1,3 +1,4 @@
+import { predicateType } from "./../../features/events/eventDashboard/EventDashboard";
 import { Attendee, Event } from "../common/model/interfaces";
 import firebase from "../config/firebase";
 
@@ -21,8 +22,27 @@ export const dataFromSnapshot = (
 	return { ...data, id: snapshot.id };
 };
 
-export const listenToEventsFromFirestore = () =>
-	db.collection("events").orderBy("date"); // events is sorted by date
+export const listenToEventsFromFirestore = (
+	predicate: Map<string, predicateType>
+) => {
+	const user = firebase.auth().currentUser;
+
+	let eventRef = db.collection("events").orderBy("date");
+	switch (predicate.get("filter")) {
+		case "attended":
+			return eventRef
+				.where("attendeeIds", "array-contains", user?.uid)
+				.where("date", ">=", predicate.get("startDate"));
+
+		case "hosting":
+			return eventRef
+				.where("hostUid", "==", user?.uid)
+				.where("date", ">=", predicate.get("startDate"));
+
+		default:
+			return eventRef.where("date", ">=", predicate.get("startDate"));
+	}
+}; // events is sorted by date
 
 export const listenToIndividualEventFromFirestore = (id: string) =>
 	db.collection("events").doc(id);
@@ -175,5 +195,32 @@ export const cancelUserAttendance = async (event: any) => {
 			});
 	} catch (error) {
 		throw error;
+	}
+};
+
+export const getUserEventsQuery = (
+	activeTab: number | string,
+	userUid: string
+) => {
+	let eventRef = db.collection("events");
+	const today = new Date();
+
+	console.log(activeTab);
+
+	switch (activeTab) {
+		case 1:
+			return eventRef
+				.where("attendeeIds", "array-contains", userUid)
+				.where("date", "<=", today)
+				.orderBy("date", "desc");
+
+		case 2:
+			return eventRef.where("hostUid", "==", userUid).orderBy("date");
+
+		default:
+			return eventRef
+				.where("attendeeIds", "array-contains", userUid)
+				.where("date", ">=", today)
+				.orderBy("date");
 	}
 };

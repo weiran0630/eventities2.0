@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CollectionRef, User } from "../../../app/common/model/interfaces";
+import {
+	CollectionRef,
+	User,
+	Event,
+} from "../../../app/common/model/interfaces";
 
 const initialState = {
-	currentUserProfile: null as unknown as User,
-	selectedUserProfile: null as unknown as User,
+	currentUserProfile: null as User | null,
+	selectedUserProfile: null as User | null,
 	photos: [] as CollectionRef[],
+	profileEvents: [] as Event[],
 };
 
 const profileSlice = createSlice({
@@ -20,6 +25,9 @@ const profileSlice = createSlice({
 		listenToUserPhotos: (state, action) => {
 			state.photos = action.payload;
 		},
+		listenToUserEvents: (state, action) => {
+			state.profileEvents = action.payload;
+		},
 	},
 });
 
@@ -27,6 +35,7 @@ export const {
 	listenToCurrentUserProfile,
 	listenToSelectedUserProfile,
 	listenToUserPhotos,
+	listenToUserEvents,
 } = profileSlice.actions;
 
 export const profileReducer = profileSlice.reducer;

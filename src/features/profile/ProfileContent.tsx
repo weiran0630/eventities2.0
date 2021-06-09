@@ -3,6 +3,7 @@ import { Tab } from "semantic-ui-react";
 import { User } from "../../app/common/model/interfaces";
 
 import AboutTab from "./profileTabs/AboutTab";
+import EventsTab from "./profileTabs/EventsTab";
 import PhotoTab from "./profileTabs/PhotoTab";
 
 interface ProfileContentProps {
@@ -28,7 +29,10 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
 				<PhotoTab profile={profile} isCurrentUser={isCurrentUser} />
 			),
 		},
-		{ menuItem: "活動", render: () => <Tab.Pane>活動</Tab.Pane> },
+		{
+			menuItem: "活動",
+			render: () => <EventsTab profile={profile} />,
+		},
 		{ menuItem: "追蹤者", render: () => <Tab.Pane>追蹤者</Tab.Pane> },
 		{ menuItem: "追蹤中", render: () => <Tab.Pane>追蹤中</Tab.Pane> },
 	];

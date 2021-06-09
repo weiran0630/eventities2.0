@@ -18,6 +18,7 @@ const asyncSlice = createSlice({
 			state.loading = false;
 		},
 		asyncActionError: (state, action) => {
+			console.log(action.payload);
 			state.loading = false;
 			state.error = action.payload;
 		},
