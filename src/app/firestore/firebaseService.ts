@@ -56,3 +56,11 @@ export const uploadToFirebaseStorage = (file: Blob, filename: string) => {
 
 	return storageRef.child(`${user?.uid}/user_images/${filename}`).put(file);
 };
+
+export const deleteFromFirebaseStorage = (filename: string) => {
+	const user = firebase.auth().currentUser;
+	const storageRef = firebase.storage().ref();
+	const photoRef = storageRef.child(`${user?.uid}/user_images/${filename}`);
+
+	return photoRef.delete();
+};

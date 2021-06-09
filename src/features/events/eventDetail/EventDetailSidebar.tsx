@@ -33,7 +33,7 @@ const EventDetailSidebar: React.FC<EventDetailSidebarProps> = ({
 							/>
 							<Item.Content verticalAlign="middle">
 								<Item.Header as="h3">
-									<span>{attendee.name}</span>
+									<span>{attendee.displayName}</span>
 								</Item.Header>
 							</Item.Content>
 						</Item>

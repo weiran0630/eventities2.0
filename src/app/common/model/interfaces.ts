@@ -1,7 +1,7 @@
 import firebase from "../../config/firebase";
 export interface Attendee {
 	id: string;
-	name: string;
+	displayName: string;
 	photoURL: string;
 }
 
@@ -43,6 +43,9 @@ export interface User {
 	createdAt: Date;
 	photoURL: string;
 }
+
+export type DocRef =
+	firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
 
 export type CollectionRef =
 	firebase.firestore.CollectionReference<firebase.firestore.DocumentData>;

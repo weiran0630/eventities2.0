@@ -115,3 +115,25 @@ export const updateUserProfilePhoto = async (
 export const getUserPhotos = (userUid: string) => {
 	return db.collection("user").doc(userUid).collection("photos");
 };
+
+export const setMainPhoto = async (photo: any) => {
+	const user = firebase.auth().currentUser;
+
+	try {
+		await db.collection("user").doc(user?.uid).update({ photoURL: photo.url });
+		return await user?.updateProfile({ photoURL: photo.url });
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const deletePhotoFromCollection = (photoId: string) => {
+	const user = firebase.auth().currentUser;
+
+	return db
+		.collection("user")
+		.doc(user?.uid)
+		.collection("photos")
+		.doc(photoId)
+		.delete();
+};
