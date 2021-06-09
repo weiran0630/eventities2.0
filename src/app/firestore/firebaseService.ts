@@ -1,6 +1,13 @@
 import { setUserProfileData } from "./firestoreService";
-import firebase from "../config/firebase";
+import firebase, { firebaseRTDatabaseURL } from "../config/firebase";
 import { toast } from "react-toastify";
+
+export const firebaseObjectToArray = (snapshot: any) => {
+	if (snapshot)
+		return Object.entries(snapshot).map(
+			(s) => Object.assign({}, s[1], { id: s[0] }) // Populate e[0] as id and e[1] as properties into a new empty object
+		);
+};
 
 export const signInWithEmail = (creds: { email: string; password: string }) =>
 	firebase.auth().signInWithEmailAndPassword(creds.email, creds.password);
@@ -64,3 +71,28 @@ export const deleteFromFirebaseStorage = (filename: string) => {
 
 	return photoRef.delete();
 };
+
+export const addEventChatComment = (eventId: string, comment: string) => {
+	const user = firebase.auth().currentUser;
+	const newComment = {
+		displayName: user?.displayName,
+		photoURL: user?.photoURL,
+		uid: user?.uid,
+		text: comment,
+		date: Date.now(),
+	};
+
+	/** firebase.database access firebase realtime database instead */
+	return firebase
+		.app()
+		.database(firebaseRTDatabaseURL)
+		.ref(`chat/${eventId}`)
+		.push(newComment);
+};
+
+export const getEventChatRef = (eventId?: string) =>
+	firebase
+		.app()
+		.database(firebaseRTDatabaseURL)
+		.ref(`chat/${eventId}`)
+		.orderByKey(); // key is effectively a timestamp: sort with time in descending order

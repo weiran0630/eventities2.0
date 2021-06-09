@@ -25,9 +25,9 @@ const EventDetailPage: React.FC = () => {
 	);
 	const { loading, error } = useTypedSelector((state) => state.async);
 	const dispatch = useTypedDispatch();
-	const isHost = selectedEvent?.hostUid === currentUser.uid; // is the current user the host of the event?
+	const isHost = selectedEvent?.hostUid === currentUser?.uid; // is the current user the host of the event?
 	const isAttending = selectedEvent?.attendees.some(
-		(attendee) => attendee.id === currentUser.uid // is the current user an attender of the event?
+		(attendee) => attendee.id === currentUser?.uid // is the current user an attender of the event?
 	);
 
 	useFirestoreDoc({
@@ -50,7 +50,7 @@ const EventDetailPage: React.FC = () => {
 					isAttending={isAttending!}
 				/>
 				<EventDetailInfo event={selectedEvent!} />
-				<EventChatRoom />
+				<EventChatRoom eventId={selectedEvent!.id} />
 			</Grid.Column>
 
 			<Grid.Column width={6}>

@@ -47,7 +47,14 @@ const AboutTab: React.FC<AboutTabProps> = ({ profile, isCurrentUser }) => {
 								</strong>
 
 								<div style={{ marginTop: 10 }}>
-									{profile.description || <em>點選修改頁面加入您的個人簡介</em>}
+									{profile.description
+										.split("\n") // create new line with every \n
+										.map((text: string, i: number) => (
+											<span>
+												{text}
+												<br />
+											</span>
+										)) || <em>點選修改頁面加入您的個人簡介</em>}
 								</div>
 							</div>
 						</>

@@ -37,6 +37,7 @@ const ProfilePage: React.FC = () => {
 					profile={selectedUserProfile!}
 					isCurrentUser={currentUser?.uid === selectedUserProfile!.id} // if there's no current user just pass the selected user
 				/>
+
 				<ProfileContent
 					profile={selectedUserProfile!}
 					isCurrentUser={currentUser?.uid === selectedUserProfile!.id}

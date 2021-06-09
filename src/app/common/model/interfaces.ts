@@ -46,6 +46,15 @@ export interface User {
 	photoURL: string;
 }
 
+export interface Comment {
+	id: string;
+	date: number;
+	displayName: string;
+	photoURL: string;
+	text: string;
+	uid: string;
+}
+
 export type DocRef =
 	firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
 

@@ -1,10 +1,11 @@
-import { Event } from "./../../common/model/interfaces";
+import { Event, Comment } from "./../../common/model/interfaces";
 import { toast } from "react-toastify";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 // import { fetchSampleData } from "../../API/MockApi";
 
 const initialState = {
 	events: [] as Event[],
+	comments: [] as Comment[],
 };
 
 export const listenToEvent = createAsyncThunk(
@@ -38,6 +39,12 @@ const eventSlice = createSlice({
 			);
 			state.events = filteredEvent;
 		},
+		listenToEventChat: (state, action: any) => {
+			state.comments = action.payload;
+		},
+		clearEventChat: (state) => {
+			state.comments = [];
+		},
 	},
 
 	extraReducers: {
@@ -47,6 +54,12 @@ const eventSlice = createSlice({
 	},
 });
 
-export const { createEvent, updateEvent, deleteEvent } = eventSlice.actions;
+export const {
+	createEvent,
+	updateEvent,
+	deleteEvent,
+	listenToEventChat,
+	clearEventChat,
+} = eventSlice.actions;
 
 export const eventReducer = eventSlice.reducer;

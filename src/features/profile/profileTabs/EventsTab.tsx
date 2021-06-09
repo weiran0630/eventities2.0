@@ -9,12 +9,13 @@ import {
 	TabProps,
 	Image,
 } from "semantic-ui-react";
+import { format } from "date-fns";
+
 import useFirestoreCollection from "../../../app/hooks/useFirestoreCollection";
 import { useTypedDispatch, useTypedSelector } from "../../../app/store/hooks";
 import { Event } from "../../../app/common/model/interfaces";
 import { listenToUserEvents } from "../../../app/store/slice/profileSlice";
 import { getUserEventsQuery } from "../../../app/firestore/firestoreService";
-import { format } from "date-fns";
 
 interface EventsTabProps {
 	profile: {
@@ -78,6 +79,7 @@ const EventsTab: React.FC<EventsTabProps> = ({ profile }) => {
 										<div style={{ marginTop: 5 }}>
 											{format(event.date, "dd MMM yyyy")}
 										</div>
+
 										<div style={{ marginTop: 5 }}>
 											{format(event.date, "HH:mm")}
 										</div>
