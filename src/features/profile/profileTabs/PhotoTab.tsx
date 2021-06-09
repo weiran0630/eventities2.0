@@ -65,7 +65,7 @@ const AboutTab: React.FC<AboutTabProps> = ({ profile, isCurrentUser }) => {
 		} catch (error) {
 			toast.error(error);
 		} finally {
-			setUpdating({ isUpdating: false, target: null });
+			setDeleting({ isDeleting: false, target: null });
 		}
 	};
 
