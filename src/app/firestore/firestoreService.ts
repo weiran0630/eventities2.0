@@ -23,7 +23,7 @@ export const dataFromSnapshot = (
 };
 
 export const listenToEventsFromFirestore = () =>
-	db.collection("events").orderBy("date");
+	db.collection("events").orderBy("date"); // events is sorted by date
 
 export const listenToIndividualEventFromFirestore = (id: string) =>
 	db.collection("events").doc(id);
@@ -81,4 +81,37 @@ export const updateUserProfile = async (profile: any) => {
 	} catch (error) {
 		throw error;
 	}
+};
+
+export const updateUserProfilePhoto = async (
+	downloadURL: string,
+	filename: string
+) => {
+	const user = firebase.auth().currentUser;
+	const userDocRef = db.collection("user").doc(user?.uid);
+	try {
+		const userDoc = await userDocRef.get();
+
+		if (!userDoc.data()?.photoURL) {
+			await db
+				.collection("user")
+				.doc(user?.uid)
+				.update({ photoURL: downloadURL }); // update the photoURL if there isn't one exist
+
+			await user?.updateProfile({
+				photoURL: downloadURL, // also update the user profile photoURL
+			});
+		}
+
+		return await db.collection("user").doc(user?.uid).collection("photos").add({
+			name: filename,
+			url: downloadURL,
+		});
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const getUserPhotos = (userUid: string) => {
+	return db.collection("user").doc(userUid).collection("photos");
 };

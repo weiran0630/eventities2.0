@@ -1,11 +1,12 @@
 import React from "react";
 import { Tab } from "semantic-ui-react";
+import { User } from "../../app/common/model/interfaces";
 
 import AboutTab from "./profileTabs/AboutTab";
 import PhotoTab from "./profileTabs/PhotoTab";
 
 interface ProfileContentProps {
-	profile: any;
+	profile: User;
 	isCurrentUser: boolean;
 }
 
@@ -24,7 +25,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
 		{
 			menuItem: "照片",
 			render: () => (
-				<PhotoTab profile={profile} isCurrentUser={isCurrentUser}></PhotoTab>
+				<PhotoTab profile={profile} isCurrentUser={isCurrentUser} />
 			),
 		},
 		{ menuItem: "活動", render: () => <Tab.Pane>活動</Tab.Pane> },

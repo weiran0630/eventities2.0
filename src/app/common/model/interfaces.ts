@@ -1,3 +1,4 @@
+import firebase from "../../config/firebase";
 export interface Attendee {
 	id: string;
 	name: string;
@@ -32,3 +33,16 @@ export interface searchOptions {
 	sessionToken?: any;
 	types?: string[];
 }
+
+export interface User {
+	id: string;
+	photos: CollectionRef[];
+	displayName: string;
+	description: string;
+	email: string;
+	createdAt: Date;
+	photoURL: string;
+}
+
+export type CollectionRef =
+	firebase.firestore.CollectionReference<firebase.firestore.DocumentData>;

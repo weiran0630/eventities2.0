@@ -31,7 +31,7 @@ const AboutTab: React.FC<AboutTabProps> = ({ profile, isCurrentUser }) => {
 							color={editMode ? "red" : "green"}
 							floated="right"
 							onClick={() => setEditMode(!editMode)}
-							content={editMode ? "取消" : "修改頁面"}
+							content={editMode ? "取消" : "修改關於"}
 						/>
 					)}
 				</Grid.Column>

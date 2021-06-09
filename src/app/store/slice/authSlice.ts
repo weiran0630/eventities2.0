@@ -44,7 +44,7 @@ const authSlice = createSlice({
 				photoURL: payload.photoURL,
 				uid: payload.uid,
 				displayName: payload.displayName,
-				providerId: payload.providerData[0]?.providerId,
+				providerId: payload.providerData[0]!.providerId,
 			};
 		},
 		singOut: (state) => {

@@ -8,9 +8,16 @@ import {
 	Tab,
 	Image,
 } from "semantic-ui-react";
+import PhotoUploadWidget from "../../../app/common/photos/PhotoUploadWidget";
+import { getUserPhotos } from "../../../app/firestore/firestoreService";
+import useFirestoreCollection from "../../../app/hooks/useFirestoreCollection";
+import { useTypedDispatch, useTypedSelector } from "../../../app/store/hooks";
+import { listenToUserPhotos } from "../../../app/store/slice/profileSlice";
+import { CollectionRef } from "../../../app/common/model/interfaces";
 
 interface AboutTabProps {
 	profile: {
+		id: string;
 		displayName: string;
 		description: string;
 		createdAt: Date;
@@ -20,9 +27,18 @@ interface AboutTabProps {
 
 const AboutTab: React.FC<AboutTabProps> = ({ profile, isCurrentUser }) => {
 	const [editMode, setEditMode] = useState(false);
+	const dispatch = useTypedDispatch();
+	const { loading } = useTypedSelector((state) => state.async);
+	const { photos } = useTypedSelector((state) => state.profile);
+
+	useFirestoreCollection({
+		query: () => getUserPhotos(profile.id),
+		data: (photos: CollectionRef[]) => dispatch(listenToUserPhotos(photos)),
+		dependencies: [dispatch, profile.id],
+	});
 
 	return (
-		<Tab.Pane>
+		<Tab.Pane loading={loading}>
 			<Grid>
 				<Grid.Column width={16}>
 					<Header floated="left">
@@ -43,15 +59,19 @@ const AboutTab: React.FC<AboutTabProps> = ({ profile, isCurrentUser }) => {
 
 				<Grid.Column width={16}>
 					{editMode ? (
-						<p>Photo Widgets</p>
+						<PhotoUploadWidget setEditMode={setEditMode} />
 					) : (
 						<Card.Group itemsPerRow={5}>
-							<Image src={"/assets/user.png"} />
+							{photos.map((photo: any) => (
+								<Card key={photo.id}>
+									<Image src={photo.url} />
 
-							<Button.Group fluid width={2}>
-								<Button basic color="green" content="主要" />
-								<Button basic color="red" icon="trash" />
-							</Button.Group>
+									<Button.Group fluid width={5}>
+										<Button basic color="green" content="主要" />
+										<Button basic color="red" icon="trash" />
+									</Button.Group>
+								</Card>
+							))}
 						</Card.Group>
 					)}
 				</Grid.Column>
